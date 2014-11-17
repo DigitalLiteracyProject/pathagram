@@ -1,12 +1,30 @@
 $(function(){
     console.log('Pathagram.js Loaded');
     
+    // preload images
+    Tripod.setSources(["../images/elephant.png" ]);
+    Tripod.start(function(){
+        q = new TImage("../images/elephant.png");
+        var pixels = q.getAllPixels();
+        for (var i = 0; i < pixels.length; i++)
+        {
+            var rgba = pixels[i].getRGBA();
+            pixels[i].setRed(Math.min(rgba[0] * 1.5, 255));
+            pixels[i].setGreen(Math.min(rgba[1] * 1.5, 255));
+            pixels[i].setBlue(Math.min(rgba[2] * 1.5, 255));     
+        }
+        q.refresh();
+    });
+    
+    
+    /*
     p = new TImage(100, 100);
     var pixels = p.getAllPixels();
     for (var i = 0; i < pixels.length; i++)
     {
         pixels[i].setRGBA(255, 0, 0, i % 100);
     }
+    */
 });
 
 /*
