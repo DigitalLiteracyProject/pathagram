@@ -8,10 +8,13 @@ $(function(){
         var pixels = q.getAllPixels();
         for (var i = 0; i < pixels.length; i++)
         {
+            // increase brightness
             var rgba = pixels[i].getRGBA();
             pixels[i].setRed(Math.min(rgba[0] * 1.5, 255));
             pixels[i].setGreen(Math.min(rgba[1] * 1.5, 255));
             pixels[i].setBlue(Math.min(rgba[2] * 1.5, 255));     
+            
+            // contrast is harder. http://stackoverflow.com/questions/10521978/html5-canvas-image-contrast
         }
         q.refresh();
     });

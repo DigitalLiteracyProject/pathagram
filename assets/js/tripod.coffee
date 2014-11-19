@@ -5,34 +5,38 @@ class TPixel
         @alpha = alpha
     
     setRed: (red) ->
-        @red = Math.round red
-        @draw()
+        @setRGBA red, @green, @blue, @alpha
         
     getRed: -> @red
         
     setGreen: (green) ->
-        @green = Math.round green        
-        @draw()
+        @setRGBA @red, green, @blue, @alpha
         
     getGreen: -> @green
         
     setBlue: (blue) ->
-        @blue = Math.round blue        
-        @draw()
+        @setRGBA @red, @green, blue, @alpha
         
     getBlue: -> @blue
         
     setAlpha: (alpha) ->
-        @alpha = Math.round alpha        
-        @draw()
+        @setRGBA @red, @green, @blue, alpha
         
     getAlpha: -> @alpha
         
     setRGBA: (red, green, blue, alpha = 255) ->
-        @red = Math.round red
-        @green = Math.round green  
-        @blue = Math.round blue
-        @alpha = Math.round alpha
+        # round values and restrict to [0, 255]
+        clamp = (num) -> 
+            num = Math.round num
+            if num < 0
+                return 0
+            if num > 255
+                return 255
+            return num
+        @red = clamp red
+        @green = clamp green
+        @blue = clamp blue
+        @alpha = clamp alpha
         @draw()
         
     getRGBA: -> [@red, @green, @blue, @alpha]
@@ -117,7 +121,6 @@ class TCanvas
         @element = $('#main-canvas')
         @context = (@element.get 0).getContext "2d"
         @imageData = @context.createImageData @width, @height
-        
         @element.attr width: @width, height: @height
         
     render: ->
