@@ -6,3 +6,8 @@
     right: 0;
     min-height: 300px;
 }
+
+.img-thumbnail{
+    max-width: 80px;
+    max-height: 80px;
+}
