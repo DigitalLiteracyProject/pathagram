@@ -1,1 +1,31 @@
-<canvas id="main-canvas" width="100", height="100"></canvas>
+<div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        Hey
+        <button class="btn btn-primary">Hi</button>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div id="editor-window">
+            <div id="editor">q = new TImage("../images/elephant.png");
+        var pixels = q.getAllPixels();
+        for (var i = 0; i < pixels.length; i++)
+        {
+            // increase brightness
+            var rgba = pixels[i].getRGBA();
+            pixels[i].setRed(Math.min(rgba[0] * 1.5, 255));
+            pixels[i].setGreen(Math.min(rgba[1] * 1.5, 255));
+            pixels[i].setBlue(Math.min(rgba[2] * 1.5, 255));     
+            
+            // contrast is harder. http://stackoverflow.com/questions/10521978/html5-canvas-image-contrast
+        }
+        q.refresh();</div>     
+            <button class="btn btn-success btn-lg btn-block" id="run">
+                <span class="glyphicon glyphicon-play"></span> Run
+            </button>
+        </div>
+        <br>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <canvas id="main-canvas" width="100", height="100"></canvas>
+        <div id="console" class="alert"></div>
+    </div>
+</div>

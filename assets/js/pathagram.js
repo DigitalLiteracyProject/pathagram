@@ -1,7 +1,8 @@
 $(function(){
-    console.log('Pathagram.js Loaded');
+    //console.log('Pathagram.js Loaded');
     
     // preload images
+    /*
     Tripod.setSources(["../images/elephant.png" ]);
     Tripod.start(function(){
         q = new TImage("../images/elephant.png");
@@ -18,6 +19,9 @@ $(function(){
         }
         q.refresh();
     });
+    */
+    
+    //renderAceEditor();
     
     
     /*
@@ -29,7 +33,29 @@ $(function(){
     }
     */
 });
+/*
+function renderAceEditor(){
+    // autosave interval
+    var autosave_interval = 1000;
 
+    // Render ace editor for HTML editor
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/xcode");
+    editor.getSession().setMode("ace/mode/javascript");
+    
+    $('#run').click(function(){
+        var code = editor.getValue();
+        try{
+            eval(code);
+            $('#console').addClass('alert-success').removeClass('alert-danger').html("Success!");
+        }
+        catch(e){
+            console.log(e);
+            $('#console').removeClass('alert-success').addClass('alert-danger').html("Line " + e.lineNumber + ": " + e.message);
+        }
+    });
+}
+*/
 /*
 function setPixel(imageData, x, y, r, g, b, a) {
     index = (x + y * imageData.width) * 4;
