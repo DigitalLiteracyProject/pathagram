@@ -9,9 +9,11 @@ $ () ->
     # preload images they can use
     Tripod.setSources ["../images/elephant.png"] # TODO make array
     
-    $('#run').click () =>
+    runButton = $('#run')
+    runButton.click () =>
+        runButton.button 'loading'
         # wrap it in a function so they just write the body of the function
-        Tripod.start () =>            
+        Tripod.start () =>
             code = editor.getValue()
             try
                 eval code
@@ -25,3 +27,5 @@ $ () ->
                     .addClass('alert-danger')
                     .removeClass('alert-success')
                     .html "Line #{error.lineNumber}: #{error.message}"
+            finally
+                runButton.button 'reset'

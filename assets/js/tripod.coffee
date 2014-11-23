@@ -33,10 +33,7 @@ class TPixel
             if num > 255
                 return 255
             return num
-        @red = clamp red
-        @green = clamp green
-        @blue = clamp blue
-        @alpha = clamp alpha
+        [@red, @green, @blue, @alpha] = (clamp value for value in [red, green, blue, alpha])
         @draw()
         
     getRGBA: -> [@red, @green, @blue, @alpha]
@@ -53,8 +50,7 @@ class TImage
             # grab source from Tripod
             @source = args[0]
             @image = Tripod.getImage @source
-            @width = @image.width
-            @height = @image.height
+            [@width, @height] = [@image.width, @image.height]
             @createCanvas()
             
             # draw image and load pixels that way
