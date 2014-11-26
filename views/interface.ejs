@@ -1,21 +1,66 @@
 <div class="row">
-    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-        <h2>
-            <span class="glyphicon glyphicon-picture"></span> Images
-        </h2>
+    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-picture"></span> Images
+                </h3>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item lead">
+                    <img src="../images/elephant.png" class="list-image">
+                    elephant
+                </div>
+            </div>
+        </div>
+ 
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-file"></span> Files
+                </h3>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item lead">
+                    <a href="#">
+                        <span class="glyphicon glyphicon-file"></span>
+                        week1<span class="text-muted">.js</span>
+                    </a>
+                </div>
+            </div>
+        </div>        
         
+        <!--
+        <h3>
+            <span class="glyphicon glyphicon-picture"></span> Images
+        </h3>
         <div class="media">
             <a class="media-left" href="#">
                 <img src="../images/elephant.png" class="img-thumbnail">
             </a>
             <div class="media-body">
-                <h4 class="media-heading">elephant</h4>
+                <p class="media-heading lead">elephant</p>
             </div>
         </div>
+        
+        <h3>
+            <span class="glyphicon glyphicon-file"></span> Files
+        </h3>
+        <div class="media">
+            <a class="media-left" href="#">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+            <div class="media-body">
+                <p class="media-heading lead">elephant</p>
+            </div>
+        </div>    
+-->
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+        <h3 class="text-center">week1<span class="text-muted">.js</span></h3>
+        
         <div id="editor-window">
-            <div id="editor">q = new TImage("../images/elephant.png");
+            <div id="editor">q = new TImage("elephant");
         var pixels = q.getAllPixels();
         for (var i = 0; i < pixels.length; i++)
         {
@@ -34,8 +79,12 @@
         </div>
         <br>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-        <canvas id="main-canvas" width="100", height="100"></canvas>
-        <div id="console" class="alert"></div>
+    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-4">
+        <canvas id="main-canvas" width="0", height="0"></canvas>
+        <div id="messages" class="alert"></div>
+        <div id="console-holder" class="alert alert-info">
+            <p class="lead">Log</p>
+            <ul id="console"></ul>
+        </div>
     </div>
 </div>

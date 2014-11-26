@@ -16,7 +16,8 @@
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
   'styles/**/*.css',
-    'bootstrap/css/bootstrap.min.css'
+    'bootstrap/css/bootstrap.min.css',
+    'bootstrap/css/paper.min.css',    
 ];
 
 

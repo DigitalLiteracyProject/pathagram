@@ -50,6 +50,7 @@ class TImage
             # grab source from Tripod
             @source = args[0]
             @image = Tripod.getImage @source
+            # TODO if @image == null, raise exception
             [@width, @height] = [@image.width, @image.height]
             @createCanvas()
             

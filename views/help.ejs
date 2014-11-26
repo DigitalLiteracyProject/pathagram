@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Tripod tutorial</title>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$$$', '$$$']]
+            }
+        });
+    </script>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+<body>
+    <h1>Tripod tutorial</h1>
+
+    <h2>Walkthrough</h2>
+
+    <p>Topics covered in this walkthrough</p>
+
+    <ul>
+        <li><a href="#loading">Loading an image</a>
+        </li>
+        <li><a href="#image_info">Getting image info</a>
+        </li>
+        <li><a href="#pixels">Iterating over pixels</a>
+        </li>
+        <li><a href="#pixel_info">Getting pixel info</a>
+        </li>
+        <li><a href="#editing">Editing pixels</a>
+        </li>
+        <li><a href="#transformations">Image transformations</a>
+        </li>
+    </ul>
+
+
+    <h3><span id="loading">Loading an image</span></h3>
+
+    <p>Tripod comes built-in with a bunch of images you can use - check out their names in the sidebar. To create an image, enter this code in the editing window and hit Run.</p>
+
+    <pre><code>var image = new TImage("elephant");
+</code></pre>
+
+    <p>Besides "elephant", other images are available from the sidebar.</p>
+
+    <h3><span id="image_info">Getting image info</span></h3>
+
+    <p>You can access basic information about the image with image methods. <code>log</code> lets you show numbers, words, or a mix of those on the screen.</p>
+
+    <p>Run this code to see image information in action.</p>
+
+    <h4>Width (number of columns)</h4>
+
+    <pre><code>var image = new TImage("elephant");
+var width = image.getWidth();
+log(width);
+</code></pre>
+
+    <h4>Height (number of rows)</h4>
+
+    <pre><code>var image = new TImage("elephant");
+var height = image.getHeight();
+log(height);
+</code></pre>
+
+    <h4>Size (width &times; height)</h4>
+
+    <pre><code>var image = new TImage("elephant");
+var size = image.getSize();
+log(size);
+</code></pre>
+
+    <h3><span id="pixels">Iterating over pixels</span></h3>
+
+    <p>With Tripod, you can get a list of every pixel in the image and run some code on it. The basic syntax for this is:</p>
+
+    <pre><code>var image = new TImage("elephant");
+var pixels = image.getAllPixels();
+for (var i = 0; i &lt; pixels.length; i++)
+{
+    // Run your code here
+}
+</code></pre>
+
+    <h3><span id="pixel_info">Getting pixel info</span></h3>
+
+    <p>Each pixel you get out of an image - a TPixel - has many useful pieces of information you can access. Try these code chunks:</p>
+
+    <h4>Color values</h4>
+
+    <p>The main information about each pixel is its color values - red, green, blue, and alpha (opacity).</p>
+
+    <p>Here's a code snippet for printing the red value of a pixel. You can also try:</p>
+
+    <ul>
+        <li>Red: <code>pixel.getRed()</code>
+        </li>
+        <li>Green: <code>pixel.getGreen()</code>
+        </li>
+        <li>Blue: <code>pixel.getBlue()</code>
+        </li>
+        <li>Alpha: <code>pixel.getAlpha()</code>
+        </li>
+    </ul>
+
+
+    <pre><code>var image = new TImage("elephant");
+var pixels = image.getAllPixels();
+for (var i = 0; i &lt; pixels.length; i++)
+{
+    var pixel = pixels[i];
+    var red = pixel.getRed();
+    log(red);
+}
+</code></pre>
+
+    <h4>Getting all color values at once</h4>
+
+    <p>You can get all four color values of a pixel with <code>pixel.getRGBA()</code>. This yields an array where the first element is red, the second is green, the third is blue, and the fourth is alpha.</p>
+
+    <pre><code>var image = new TImage("elephant");
+var pixels = image.getAllPixels();
+for (var i = 0; i &lt; pixels.length; i++)
+{
+    var pixel = pixels[i];
+    var rgba = pixel.getRGBA();
+    log(rgba);
+
+    var red = rgba[0];
+    var green = rgba[1];
+    var blue = rgba[2];
+    var alpha = rgba[3];
+}
+</code></pre>
+
+    <h3><span id="editing">Editing pixels</span></h3>
+
+    <p>The real fun of Tripod comes from editing the pixels in an image - this lets you change how the image looks!</p>
+
+    <h4>Editing individual colors</h4>
+
+    <p>The code for this is very similar to getting info from a pixel, except you use <em>set</em> instead of <em>get</em> and pass an argument to the <em>set</em> function. For instance, <code>pixel.setRed(255)</code> vs. <code>pixel.getRed()</code>.</p>
+
+    <p>Like the <em>get</em> functions, you can use these functions to change color values:</p>
+
+    <ul>
+        <li>Red: <code>pixel.setRed(red)</code>
+        </li>
+        <li>Green: <code>pixel.setGreen(green)</code>
+        </li>
+        <li>Blue: <code>pixel.setBlue(blue)</code>
+        </li>
+        <li>Alpha: <code>pixel.setAlpha(alpha)</code>
+        </li>
+    </ul>
+
+
+    <p>The variables in parentheses (<em>arguments</em>) are numbers that you use to tell Tripod what to make the color value. <code>pixel.setRed(255)</code> makes the image's red value as high as possible; <code>pixel.setRed(0)</code> makes it as low as possible.</p>
+
+    <p><strong>Note: make sure you write <code>image.refresh()</code> once you're done editing an image! This lets Tripod know to redraw the image on the screen.</strong>
+    </p>
+
+    <p>Here's some code to make the entire image red:</p>
+
+    <pre><code>var image = new TImage("elephant");
+var pixels = image.getAllPixels();
+for (var i = 0; i &lt; pixels.length; i++)
+{
+    var pixel = pixels[i];
+    pixel.setRed(255);
+    pixel.setGreen(0);
+    pixel.setBlue(0);
+    pixel.setAlpha(255);
+}
+
+image.refresh();
+</code></pre>
+
+    <h4>Editing all colors at once</h4>
+
+    <p>Like when you used <code>pixel.getRGBA()</code> to get all the color values at once, you can use <code>pixel.setRGBA(red, green, blue, alpha)</code> to set all the color values at once.</p>
+
+    <p><code>pixel.setRGBA(red, green, blue, alpha)</code> needs four arguments. Or, you can omit the <code>alpha</code> and Tripod will make the pixel fully opaque for you.</p>
+
+    <p>Here's how you can set a pixel to a certain color:</p>
+
+    <ul>
+        <li>Red: <code>pixel.setRGBA(255, 0, 0, 255)</code> or <code>pixel.setRGBA(255, 0, 0)</code>
+        </li>
+        <li>Green: <code>pixel.setRGBA(0, 255, 0, 255)</code> or <code>pixel.setRGBA(0, 255, 0)</code>
+        </li>
+        <li>Blue: <code>pixel.setRGBA(0, 0, 255, 255)</code> or <code>pixel.setRGBA(0, 0, 255)</code>
+        </li>
+    </ul>
+
+
+    <p>Here's a simpler way to write the previous example (turning the whole image red) using <code>pixel.setRGBA(red, green, blue, alpha)</code>:</p>
+
+    <pre><code>var image = new TImage("elephant");
+var pixels = image.getAllPixels();
+for (var i = 0; i &lt; pixels.length; i++)
+{
+    var pixel = pixels[i];
+    pixel.setRGBA(255, 0, 0, 255);
+}
+
+image.refresh();
+</code></pre>
+
+    <h4>Alpha (transparency)</h4>
+
+    <p>Red, green, and blue are pretty straightforward, but alpha (transparency) is more complicated.</p>
+
+    <p>To make a pixel fully opaque, use <code>pixel.setAlpha(255)</code>.</p>
+
+    <p>To make a pixel fully transparent, use <code>pixel.setAlpha(0)</code>.</p>
+
+    <h3><span id="transformations">Image transformations</span></h3>
+
+    <p>The most powerful part of Tripod is image editing like you would do with Instagram - adjusting brightness and contrast, applying filters, etc. To do this, you need to combine all the skills you've learned so far.</p>
+
+    <h4>Adjusting each pixel</h4>
+
+    <p>A basic filter like brightness will increase change each pixel the same way. For this, loop over each pixel and use <em>get</em> and <em>set</em> functions.</p>
+
+    <p>Here's an example of how to increase brightness by increasing the red, green, and blue values of each pixel:</p>
+
+    <pre><code>var image = new TImage("elephant");
+var pixels = image.getAllPixels();
+for (var i = 0; i &lt; pixels.length; i++)
+{
+    var pixel = pixels[i];
+    var red = pixel.getRed() * 1.5;
+    var green = pixel.getGreen() * 1.5;
+    var blue = pixel.getBlue() * 1.5;   
+    pixel.setRed(red);
+    pixel.setGreen(green);
+    pixel.setBlue(blue);
+}
+
+image.refresh();
+</code></pre>
+
+    <h4>Good practices with <em>set</em></h4>
+
+    <p>Remember that each color value must be between 0 and 255, inclusive. When you apply filters like you did above, you might move the pixel's color values outside this range. To keep the colors in this range, use these functions:</p>
+
+    <ul>
+        <li><code>Math.min(a, b)</code> gives a or b, whichever is lower.</li>
+        <li><code>Math.max(a, b)</code> gives a or b, whichever is higher.</li>
+    </ul>
+
+
+    <p>So, say you've used a filter to change a pixel's red value and stored it in a variable <code>red</code>. Before you store <code>red</code> in the pixel's red value, use <code>Math.min(a, b)</code> and <code>Math.max(a, b)</code> to keep the value of <code>red</code> between 0 and 255.</p>
+
+    <ul>
+        <li><code>Math.min(255, red)</code> will ensure the red value is no higher than 255.</li>
+        <li><code>Math.max(0, red)</code> will ensure the red value is no lower than 255.</li>
+    </ul>
+
+
+    <p>Here's a better version of the above example with brightness:</p>
+
+    <pre><code>var image = new TImage("elephant");
+var pixels = image.getAllPixels();
+for (var i = 0; i &lt; pixels.length; i++)
+{
+    var pixel = pixels[i];
+    var red = pixel.getRed() * 1.5;
+    var green = pixel.getGreen() * 1.5;
+    var blue = pixel.getBlue() * 1.5;
+    pixel.setRed(Math.min(red, 255));
+    pixel.setGreen(Math.min(green, 255));
+    pixel.setBlue(Math.min(blue, 255));
+}
+
+image.refresh();
+</code></pre>
+
+    <p>Since we're increasing the color values, we need to stop the color value from going over 255. We're not decreasing the color value so we don't have to worry about the color value going under 0.</p>
+</body>
+
+</html>
