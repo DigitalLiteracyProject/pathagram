@@ -91,7 +91,16 @@ q.refresh();
     </div>
     <div class="col-lg-4 col-md-4 col-sm-3 col-xs-4">
         <canvas id="main-canvas" width="0", height="0"></canvas>
-        <div id="messages" class="alert"></div>
+        <div id="messages-success">
+            <div class="alert alert-success">Success!</div>
+            <a id="btn-download-image" class="btn btn-default" download="image.png" href="#" target="_blank">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                Download Drawing
+            </a>
+        </div>
+        <div id="messages-failure" class="alert alert-danger">
+            
+        </div>
         <div id="console-holder" class="alert alert-info">
             <p class="lead">Log</p>
             <ul id="console"></ul>

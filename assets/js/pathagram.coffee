@@ -17,22 +17,19 @@ $ () ->
     runButton.click () =>
         runButton.button 'loading'
         # reset debug console
-        resetConsole()
+        resetOutput()
         
         # wrap it in a function so they just write the body of the function
         Tripod.start () =>
             code = editor.getValue()
             try
                 eval code
-                $('#messages')
-                    .addClass('alert-success')
-                    .removeClass('alert-danger')
-                    .html "Success!"
+                $('#messages-success').show()
+                $('#messages-failure').hide()
             catch error
                 console.log error
-                $('#messages')
-                    .addClass('alert-danger')
-                    .removeClass('alert-success')
+                $('#messages-success').hide()
+                $('#messages-failure').show()
                     .html "Line #{error.lineNumber}: #{error.message}"
             finally
                 runButton.button 'reset'
@@ -40,12 +37,20 @@ $ () ->
 # Initializes UI state when app is loaded.
 onload = () ->
     console.log "Hi from Coffee"
-    resetConsole()
+    resetOutput()
+    attachHandlers()
     
-# Resets the debug console.
-resetConsole = () ->
+# Binds click and other handlers to interface elements.
+attachHandlers = () ->
+    $('#btn-download-image').unbind('click').bind 'click', () ->
+        $(this).attr 'href', $('#main-canvas').get(0).toDataURL()
+
+# Resets the output pane.
+resetOutput = () ->
     $('#console').html ''
     $('#console-holder').hide()
+    $('#messages-success').hide()
+    $('#messages-failure').hide()    
                 
 # global functions
 
