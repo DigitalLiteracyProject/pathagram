@@ -11,6 +11,14 @@
                     <img src="../images/elephant.png" class="list-image">
                     elephant
                 </div>
+                <div class="list-group-item lead">
+                    <img src="../images/chicken.png" class="list-image">
+                    chicken
+                </div>
+                <div class="list-group-item lead">
+                    <img src="../images/harvard-yard.jpg" class="list-image">
+                    harvard
+                </div>
             </div>
         </div>
  
@@ -60,19 +68,21 @@
         <h3 class="text-center">week1<span class="text-muted">.js</span></h3>
         
         <div id="editor-window">
-            <div id="editor">q = new TImage("elephant");
-        var pixels = q.getAllPixels();
-        for (var i = 0; i < pixels.length; i++)
-        {
-            // increase brightness
-            var rgba = pixels[i].getRGBA();
-            pixels[i].setRed(Math.min(rgba[0] * 1.5, 255));
-            pixels[i].setGreen(Math.min(rgba[1] * 1.5, 255));
-            pixels[i].setBlue(Math.min(rgba[2] * 1.5, 255));     
+            <div id="editor">
+var RATIO = 1.5;
+
+q = new TImage("harvard");
+var pixels = q.getAllPixels();
+
+for (var i = 0; i < pixels.length; i++) {
+    var pixel = pixels[i];
+    pixel.setRed(pixel.getRed() * RATIO);
+    pixel.setGreen(pixel.getGreen() * RATIO);
+    pixel.setBlue(pixel.getBlue() * RATIO);
+}
+q.refresh();
             
-            // contrast is harder. http://stackoverflow.com/questions/10521978/html5-canvas-image-contrast
-        }
-        q.refresh();</div>     
+            </div>     
             <button class="btn btn-success btn-lg btn-block" id="run" data-loading-text='<span class="glyphicon glyphicon-play"></span> Working...' autocomplete="off">
                 <span class="glyphicon glyphicon-play"></span> Run
             </button>

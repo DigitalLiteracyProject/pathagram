@@ -112,6 +112,12 @@ class TImage
             @pixels[start... start + @width]
         else
             null
+            
+    getCols: () ->
+        (@getCol(x) for x in [0... @width])
+        
+    getRows: () ->
+        (@getRow(y) for y in [0... @height])
         
 class TCanvas
     constructor: (@width, @height) ->

@@ -8,8 +8,9 @@ $ () ->
     
     # preload images they can use
     Tripod.setSources {
-        "elephant": "../images/elephant.png"
-                    
+        "elephant": "../images/elephant.png",
+        "chicken": "../images/chicken.png",
+        "harvard": "../images/harvard-yard.jpg"
         }
     
     runButton = $('#run')
