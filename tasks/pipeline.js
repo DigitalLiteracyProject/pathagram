@@ -17,7 +17,8 @@
 var cssFilesToInject = [
   'styles/**/*.css',
     'bootstrap/css/bootstrap.min.css',
-    'bootstrap/css/paper.min.css',    
+    'bootstrap/css/paper.min.css',
+    'font-awesome/css/*.css'
 ];
 
 

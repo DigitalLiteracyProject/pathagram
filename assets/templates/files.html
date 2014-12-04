@@ -1,0 +1,43 @@
+<!--
+
+Renders a list view of all the available files, including images and script files.
+
+Input: 
+String[] images     names (e.g. picture.png) of all the image resources.
+String[] scripts    names (e.g. week1.js) of all the script resources.
+
+--> 
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <span class="glyphicon glyphicon-picture"></span> Images
+        </h3>
+    </div>
+    <div class="list-group">
+        <% _.each(images, function(image){ %>
+            <div class="list-group-item lead">
+                <img src="../images/<%=image%>" class="list-image">
+                <%= image.to(image.lastIndexOf(".")) %>
+            </div>
+        <% }); %>
+    </div>
+</div>
+        
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <span class="glyphicon glyphicon-file"></span> Files
+        </h3>
+    </div>
+    <div class="list-group">
+        <% _.each(scripts, function(script){ %>
+            <div class="list-group-item lead">
+                <a href="#" class="file-link" data-file="<%= script %>">
+                    <span class="glyphicon glyphicon-file"></span>
+                    <%= script.to(script.lastIndexOf(".")) %><span class="text-muted">.js</span>
+                </a>
+            </div>
+        <% }); %>
+    </div>
+</div>

@@ -76,6 +76,9 @@ class TImage
                 x = i % @width
                 y = i // @width
                 @pixels.push new TPixel @canvas, x, y, r, g, b, a            
+        
+        # set this to main image if it's the first image that's been created
+        Tripod.mainImage = this if Tripod.mainImage == null
             
     createCanvas: ->
         @size = @width * @height
@@ -119,12 +122,27 @@ class TImage
     getRows: () ->
         (@getRow(y) for y in [0... @height])
         
+    ellipse: (args...) -> @canvas.ellipse args...
+    
+    rect: (args...) -> @canvas.rect args...
+    
+    setBrushColor: (args...) -> @canvas.setBrushColor args...
+    
+    getBrushColor: () -> @canvas.getBrushColor()
+    
+    setBucketColor: (args...) -> @canvas.setBucketColor args...
+    
+    getBucketColor: () -> @canvas.getBucketColor()    
+        
 class TCanvas
     constructor: (@width, @height) ->
         @element = $('#main-canvas')
         @context = (@element.get 0).getContext "2d"
         @imageData = @context.createImageData @width, @height
         @element.attr width: @width, height: @height
+        
+        @brushColor = []
+        @bucketColor = []
         
     render: ->
         @context.putImageData @imageData, 0, 0
@@ -158,11 +176,61 @@ class TCanvas
         # 4 elements (r, g, b, a) per pixel
         (x + y * @imageData.width) * 4
         
+    # After a draw function actually creates a path, this handles the coloring of the path (stroke and fill), and refreshing image data.
+    strokeAndFill: () ->
+        # stroke
+        @context.strokeStyle = "#" + @brushColor[0].hex(2) + @brushColor[1].hex(2) + @brushColor[2].hex(2)
+        @context.globalAlpha = @brushColor[3] / 255
+        @context.stroke()
+        @context.fillStyle = "#" + @bucketColor[0].hex(2) + @bucketColor[1].hex(2) + @bucketColor[2].hex(2)
+        @context.globalAlpha = @bucketColor[3] / 255
+        @context.fill()
+        
+        @refreshImageData()        
+        
+    ellipse: (x, y, width, height) ->
+        x = x - width / 2.0
+        y = y - height / 2.0
+        w = width
+        h = height
+
+        kappa = .5522848
+        ox = (w / 2) * kappa # control point offset horizontal
+        oy = (h / 2) * kappa # control point offset vertical
+        xe = x + w # x-end
+        ye = y + h # y-end
+        xm = x + w / 2 # x-middle
+        ym = y + h / 2 # y-middle
+        @context.beginPath()
+        @context.moveTo x, ym
+        @context.bezierCurveTo x, ym - oy, xm - ox, y, xm, y
+        @context.bezierCurveTo xm + ox, y, xe, ym - oy, xe, ym
+        @context.bezierCurveTo xe, ym + oy, xm + ox, ye, xm, ye
+        @context.bezierCurveTo xm - ox, ye, x, ym + oy, x, ym
+        
+        @strokeAndFill()
+        
+    rect: (x, y, width, height) ->
+        @context.rect x, y, width, height
+        
+        @strokeAndFill()
+    
+    setBrushColor: (red, green, blue, alpha) ->
+        @brushColor = [ red, green, blue, alpha ]
+        
+    getBrushColor: () -> @brushColor
+    
+    setBucketColor: (red, green, blue, alpha) ->
+        @bucketColor = [ red, green, blue, alpha ]  
+        
+    getBucketColor: () -> @bucketColor          
+        
         
 class _Tripod
     constructor: ->
         @sources = {}
         @images = {}
+        @mainImage = null
     
     # setSources(Object sourceMap)
     # setSources(String[] sourceURLs)
@@ -177,6 +245,9 @@ class _Tripod
     getImage: (name) -> @images[name]
             
     start: (callback) ->
+        # reset instance vars
+        @mainImage = null
+        
         # load sources
         totalSources = (key for key, value of @sources).length
         loadedSources = 0
@@ -185,6 +256,7 @@ class _Tripod
             @images[name].onload = () ->
                 loadedSources++
                 if loadedSources == totalSources
+                    # ready to start
                     callback()
             @images[name].src = url
        
@@ -195,4 +267,29 @@ Tripod = new _Tripod
 p = new TImage 100, 100
 for pixel, i in p.pixels
     pixel.setRGBA 255, 0, 0, i % 100
+###
+    
+###
+
+# http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
+
+drawEllipseByCenter = (ctx, cx, cy, w, h) ->
+  drawEllipse ctx, cx - w / 2.0, cy - h / 2.0, w, h
+
+drawEllipse = (ctx, x, y, w, h) ->
+  kappa = .5522848
+  ox = (w / 2) * kappa # control point offset horizontal
+  oy = (h / 2) * kappa # control point offset vertical
+  xe = x + w # x-end
+  ye = y + h # y-end
+  xm = x + w / 2 # x-middle
+  ym = y + h / 2 # y-middle
+  ctx.beginPath()
+  ctx.moveTo x, ym
+  ctx.bezierCurveTo x, ym - oy, xm - ox, y, xm, y
+  ctx.bezierCurveTo xm + ox, y, xe, ym - oy, xe, ym
+  ctx.bezierCurveTo xe, ym + oy, xm + ox, ye, xm, ye
+  ctx.bezierCurveTo xm - ox, ye, x, ym + oy, x, ym
+  ctx.stroke()
+
 ###

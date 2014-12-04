@@ -1,0 +1,15 @@
+<!--
+
+Prints out list items displaying links to code snippets.
+
+Input: String[] snippetNames    The human-readable names for each snippet.
+
+-->
+
+<% _.each(snippetNames, function(snippet){ %>
+    <li>
+        <a href="#" class="snippet-link" data-snippet="<%= snippet %>">
+            <%= snippet %>
+        </a>
+    </li>
+<% }); %>
