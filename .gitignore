@@ -40,7 +40,8 @@
 ################################################
 
 config/local.js
-
+.brackets.json
+.editorconfig
 
 
 
