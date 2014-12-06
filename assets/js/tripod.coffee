@@ -5,35 +5,38 @@ class TPixel
         @alpha = alpha
     
     setRed: (red) ->
-        @setRGBA red, @green, @blue, @alpha
+        @red = clamp red
+        @draw()
         
     getRed: -> @red
         
     setGreen: (green) ->
-        @setRGBA @red, green, @blue, @alpha
+        @green = clamp green
+        @draw()
         
     getGreen: -> @green
         
     setBlue: (blue) ->
-        @setRGBA @red, @green, blue, @alpha
+        @blue = clamp blue
+        @draw()
         
     getBlue: -> @blue
         
     setAlpha: (alpha) ->
-        @setRGBA @red, @green, @blue, alpha
+        @alpha = clamp alpha
+        @draw()
         
     getAlpha: -> @alpha
         
     setRGBA: (red, green, blue, alpha = 255) ->
-        # round values and restrict to [0, 255]
-        clamp = (num) -> 
-            num = Math.round num
-            if num < 0
-                return 0
-            if num > 255
-                return 255
-            return num
-        [@red, @green, @blue, @alpha] = (clamp value for value in [red, green, blue, alpha])
+        @red = clamp red
+        @green = clamp green
+        @blue = clamp blue
+        @alpha = clamp alpha
+        
+        # ordinarily we'd do this but it's inefficient
+        # [@red, @green, @blue, @alpha] = (clamp value for value in [red, green, blue, alpha])
+        
         @draw()
         
     getRGBA: -> [@red, @green, @blue, @alpha]
@@ -266,3 +269,13 @@ class _Tripod
             callback()
        
 Tripod = new _Tripod
+
+
+# round values and restrict to [0,255]
+clamp = (num) -> 
+    num = Math.round num
+    if num < 0
+        return 0
+    if num > 255
+        return 255
+    return num

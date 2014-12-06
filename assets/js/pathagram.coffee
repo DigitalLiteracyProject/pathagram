@@ -1,3 +1,5 @@
+editor = null
+
 $ () ->
     onload()
     
@@ -62,8 +64,7 @@ $ () ->
 loadSnippet = (name) ->
     name = name.toLowerCase().dasherize()
     handler = (data) ->
-        # console.log data
-        editor = ace.edit "editor"        
+        # console.log data   
         editor.setValue data
         runInput()
     snippet = $.get "snippets/#{name}.js", handler, "text"
