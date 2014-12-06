@@ -55,7 +55,7 @@ $ () ->
     $('#run').click () -> runInput()
     
     # run sample snippet
-    loadSnippet "brightness"
+    loadSnippet "original"
     
     # load default tab
     addTab "run.js"
@@ -99,8 +99,7 @@ runInput = () ->
     $('#loading-modal').modal 'show'
 
     # wrap it in a function so they just write the body of the function
-    Tripod.start $('#main-canvas'), () =>  
-        editor = ace.edit "editor"
+    Tripod.start $('#main-canvas'), () =>
         code = editor.getValue()
         try
             eval code
