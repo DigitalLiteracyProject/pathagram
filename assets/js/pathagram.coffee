@@ -70,7 +70,6 @@ loadSnippet = (name) ->
                     
 # Initializes UI state when app is loaded.
 onload = () ->
-    console.log "Hi from Coffee"
     resetOutput()
     
 # Binds click and other handlers to interface elements in the output pane.
@@ -95,15 +94,16 @@ attachOutputHandlers = () ->
 runInput = () ->
     runButton = $('#run')
     runButton.button 'loading'
-    # reset debug console
     resetOutput()
+    $('#loading-modal').modal 'show'
 
     # wrap it in a function so they just write the body of the function
-    Tripod.start () =>  
+    Tripod.start $('#main-canvas'), () =>  
         editor = ace.edit "editor"
         code = editor.getValue()
         try
             eval code
+            
             $('#messages').show().html template "message-success"
             
             attachOutputHandlers()
@@ -112,6 +112,7 @@ runInput = () ->
             console.log error
             $('#messages').show().html template "message-error", { error: error }
         finally
+            $('#loading-modal').modal 'hide'
             runButton.button 'reset'
         
 # Resets the output pane.
@@ -133,3 +134,11 @@ log = (variable) ->
     li.html(variable + "")
     $('#console').prepend li
     $('#console-holder').show()
+    
+    
+
+startWorker = (args...) ->
+    worker = new Worker "js/worker.js"
+    worker.onmessage = (event) ->
+        console.log event
+    worker.postMessage args...

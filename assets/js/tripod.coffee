@@ -136,7 +136,7 @@ class TImage
         
 class TCanvas
     constructor: (@width, @height) ->
-        @element = $('#main-canvas')
+        @element = Tripod.canvas
         @context = (@element.get 0).getContext "2d"
         @imageData = @context.createImageData @width, @height
         @element.attr width: @width, height: @height
@@ -229,13 +229,14 @@ class TCanvas
 class _Tripod
     constructor: ->
         @sources = {}
-        @images = {}
+        @images = null
         @mainImage = null
+        @canvas = null
     
     # setSources(Object sourceMap)
     # setSources(String[] sourceURLs)
     setSources: (sources) ->
-        if $.isArray sources
+        if Array.isArray sources
             # map URL => URL by default (nickname of source is URL) 
             @sources[url] = url for url in sources
         else
@@ -244,20 +245,24 @@ class _Tripod
             
     getImage: (name) -> @images[name]
             
-    start: (callback) ->
+    start: (@canvas, callback) ->
         # reset instance vars
         @mainImage = null
         
-        # load sources
-        totalSources = (key for key, value of @sources).length
-        loadedSources = 0
-        for name, url of @sources
-            @images[name] = new Image
-            @images[name].onload = () ->
-                loadedSources++
-                if loadedSources == totalSources
-                    # ready to start
-                    callback()
-            @images[name].src = url
+        # load sources if not already loaded
+        if not @images
+            @images = {}
+            totalSources = (key for key, value of @sources).length
+            loadedSources = 0
+            for name, url of @sources
+                @images[name] = new Image
+                @images[name].onload = () ->
+                    loadedSources++
+                    if loadedSources == totalSources
+                        # ready to start
+                        callback()
+                @images[name].src = url
+        else
+            callback()
        
 Tripod = new _Tripod
