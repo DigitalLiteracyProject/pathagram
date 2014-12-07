@@ -19,7 +19,7 @@ for (var i = 0; i < pixels.length; i++) {
 THRESHOLD = sum / n;
 
 for (var i = 0; i < pixels.length; i++) {
-    // set to either black or white
+    // set to either darker or lighter
     var pixel = pixels[i];
     if (pixel.getAlpha() > 0) {
         var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
