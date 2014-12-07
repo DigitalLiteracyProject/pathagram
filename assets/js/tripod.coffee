@@ -180,7 +180,6 @@ class TCanvas
         pixel.green = @imageData.data[index + 1]
         pixel.blue = @imageData.data[index + 2]
         pixel.alpha = @imageData.data[index + 3]        
-        # [pixel.red, pixel.green, pixel.blue, pixel.alpha] = @imageData.data[index... index + 4]
         
     # Returns the index in @imageData that the given coordinate can be found
     getIndex: (x, y) ->
@@ -189,10 +188,11 @@ class TCanvas
         
     # After a draw function actually creates a path, this handles the coloring of the path (stroke and fill), and refreshing image data.
     strokeAndFill: () ->
-        # stroke
+        # stroke (border)
         @context.strokeStyle = "#" + @brushColor[0].hex(2) + @brushColor[1].hex(2) + @brushColor[2].hex(2)
         @context.globalAlpha = @brushColor[3] / 255
         @context.stroke()
+        # fill
         @context.fillStyle = "#" + @bucketColor[0].hex(2) + @bucketColor[1].hex(2) + @bucketColor[2].hex(2)
         @context.globalAlpha = @bucketColor[3] / 255
         @context.fill()
@@ -200,6 +200,7 @@ class TCanvas
         @refreshImageData()        
         
     # Draws an ellipse centered at (x,y)
+    # From http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
     ellipse: (x, y, width, height) ->
         x = x - width / 2.0
         y = y - height / 2.0
