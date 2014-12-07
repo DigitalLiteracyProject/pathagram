@@ -4,5 +4,8 @@
 -->
 
 <div class="alert alert-danger">
-    Line <%= error.lineNumber %>: <%= error.message %>
+    <% if(error.lineNumber){%>
+        Line <%= error.lineNumber %>: 
+    <%}%>
+    <%= error.message %>
 </div>

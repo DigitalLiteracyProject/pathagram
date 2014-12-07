@@ -3,7 +3,7 @@
 Renders a list view of all the available files, including images and script files.
 
 Input: 
-String[] images     names (e.g. picture.png) of all the image resources.
+Object[] images     name/URL pairs of all the image resources.
 String[] scripts    names (e.g. week1.js) of all the script resources.
 
 --> 
@@ -17,8 +17,8 @@ String[] scripts    names (e.g. week1.js) of all the script resources.
     <div class="list-group">
         <% _.each(images, function(image){ %>
             <div class="list-group-item lead">
-                <img src="../images/<%=image%>" class="list-image">
-                <%= image.to(image.lastIndexOf(".")) %>
+                <img src="../images/<%=image.url%>" class="list-image">
+                <%= image.name %>
             </div>
         <% }); %>
     </div>

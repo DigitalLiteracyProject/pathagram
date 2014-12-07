@@ -1,5 +1,7 @@
 image = new TImage("harvard");
 
+var RADIUS = 1;
+
 var width = image.getWidth();
 var height = image.getHeight();
 for (var i = 0; i < width; i++) {
@@ -9,7 +11,6 @@ for (var i = 0; i < width; i++) {
         var neighbors = [
             image.getPixelAt(i, j)              
         ];
-        var RADIUS = 2;
         for (var m = i - RADIUS; m <= i + RADIUS; m++) {
             for (var n = j - RADIUS; n <= j + RADIUS; n++) {
                 neighbors.push(image.getPixelAt(m, n));

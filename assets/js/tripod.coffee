@@ -87,6 +87,7 @@ class TImage
         @size = @width * @height
         @canvas = new TCanvas @width, @height
         
+    # Re-draws the image on the actual DOM element; call after editing the image
     refresh: ->
         @canvas.render()
             
@@ -125,14 +126,18 @@ class TImage
     getRows: () ->
         (@getRow(y) for y in [0... @height])
         
+    # Draws an ellipse
     ellipse: (args...) -> @canvas.ellipse args...
     
+    # Draws a rectangle
     rect: (args...) -> @canvas.rect args...
     
+    # Sets the border color for rect/ellipse calls
     setBrushColor: (args...) -> @canvas.setBrushColor args...
     
     getBrushColor: () -> @canvas.getBrushColor()
     
+    # Sets the fill color for rect/ellipse calls
     setBucketColor: (args...) -> @canvas.setBucketColor args...
     
     getBucketColor: () -> @canvas.getBucketColor()    
@@ -144,9 +149,10 @@ class TCanvas
         @imageData = @context.createImageData @width, @height
         @element.attr width: @width, height: @height
         
-        @brushColor = []
-        @bucketColor = []
+        @brushColor = [0, 0, 0, 255]
+        @bucketColor = [0, 0, 0, 255]
         
+    # Updates the canvas with the current image data
     render: ->
         @context.putImageData @imageData, 0, 0
         
@@ -154,18 +160,20 @@ class TCanvas
     refreshImageData: ->
         @imageData = @context.getImageData 0, 0, @width, @height
         
+    # Renders an image on the canvas
     drawImage: (image) ->
         @context.drawImage image, 0, 0
         @refreshImageData()
     
+    # Puts data for a specific abstract pixel on the canvas's image data
     drawPixel: (pixel) ->
         index = @getIndex pixel.x, pixel.y
         @imageData.data[index + 0] = pixel.getRed()    
         @imageData.data[index + 1] = pixel.getGreen()  
         @imageData.data[index + 2] = pixel.getBlue()  
-        @imageData.data[index + 3] = pixel.getAlpha()        
-        # @render() # TODO inefficient to do this every single time; have user do it manually?
+        @imageData.data[index + 3] = pixel.getAlpha()
         
+    # Grabs data from a specific spot in the canvas's image data and puts it in the abstract pixel
     loadPixel: (pixel) ->
         index = @getIndex pixel.x, pixel.y
         pixel.red = @imageData.data[index + 0]
@@ -191,6 +199,7 @@ class TCanvas
         
         @refreshImageData()        
         
+    # Draws an ellipse centered at (x,y)
     ellipse: (x, y, width, height) ->
         x = x - width / 2.0
         y = y - height / 2.0
@@ -213,17 +222,20 @@ class TCanvas
         
         @strokeAndFill()
         
+    # Draws a rectangle centered at (x,y)
     rect: (x, y, width, height) ->
         @context.rect x, y, width, height
         
         @strokeAndFill()
     
-    setBrushColor: (red, green, blue, alpha) ->
+    # Sets the border color for rect/ellipse calls    
+    setBrushColor: (red, green, blue, alpha = 255) ->
         @brushColor = [ red, green, blue, alpha ]
         
     getBrushColor: () -> @brushColor
     
-    setBucketColor: (red, green, blue, alpha) ->
+    # Sets the fill color for rect/ellipse calls    
+    setBucketColor: (red, green, blue, alpha = 255) ->
         @bucketColor = [ red, green, blue, alpha ]  
         
     getBucketColor: () -> @bucketColor          
@@ -245,9 +257,11 @@ class _Tripod
         else
             # it's an object mapping name => URL which is just what we want
             @sources = sources
-            
+         
+    # Returns the image with the specified name from the sources
     getImage: (name) -> @images[name]
             
+    # Loads images and calls the callback when ready. Call this before interacting with the image.
     start: (@canvas, callback) ->
         # reset instance vars
         @mainImage = null
@@ -270,6 +284,7 @@ class _Tripod
        
 Tripod = new _Tripod
 
+# utility functions
 
 # round values and restrict to [0,255]
 _Tripod::clamp = (num) -> 

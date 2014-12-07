@@ -21,7 +21,8 @@ $ () ->
             "Posterize",
             "Blur",
             "Darken Edges",
-            "Add Noise"
+            "Add Noise",
+            "Superhero"
     ] }
     $('.snippet-link').click () ->
         snippet = $(this).data 'snippet'
@@ -30,15 +31,15 @@ $ () ->
     # set up sidebar
     $('#file-sidebar').html template "files", {
         images: [
-            "harvard-yard.jpg",
-            "elephant.png",
-            "chicken.png"
+            {"name": "harvard", "url": "harvard-yard.jpg"},
+            {"name": "new-york", "url": "new-york.jpg"},
+            {"name": "boston", "url": "boston.jpg"}
         ],
         
         scripts: [
             "run.js",
-            "brightness.js",
-            "grayscale.js"
+            # "brightness.js",
+            # "grayscale.js"
         ]
     }
     $('.file-link').click () ->
@@ -47,8 +48,8 @@ $ () ->
     
     # preload images they can use
     Tripod.setSources {
-        "elephant": "../images/elephant.png",
-        "chicken": "../images/chicken.png",
+        "new-york": "../images/new-york.jpg",
+        "boston": "../images/boston.jpg",
         "harvard": "../images/harvard-yard.jpg"
         }
     
@@ -93,27 +94,24 @@ attachOutputHandlers = () ->
 
 # Runs the inputted code.
 runInput = () ->
-    runButton = $('#run')
-    runButton.button 'loading'
+    $('#run').button 'loading'
     resetOutput()
-    $('#loading-modal').modal 'show'
-
+    
     # wrap it in a function so they just write the body of the function
     Tripod.start $('#main-canvas'), () =>
         code = editor.getValue()
         try
             eval code
             
-            $('#messages').show().html template "message-success"
-            
+            $('#messages').show().html template "message-success" 
             attachOutputHandlers()
             
         catch error
-            console.log error
+            console.log window.E = error
             $('#messages').show().html template "message-error", { error: error }
         finally
             $('#loading-modal').modal 'hide'
-            runButton.button 'reset'
+            $('#run').button 'reset'
         
 # Resets the output pane.
 resetOutput = () ->
@@ -134,11 +132,3 @@ log = (variable) ->
     li.html(variable + "")
     $('#console').prepend li
     $('#console-holder').show()
-    
-    
-
-startWorker = (args...) ->
-    worker = new Worker "js/worker.js"
-    worker.onmessage = (event) ->
-        console.log event
-    worker.postMessage args...
