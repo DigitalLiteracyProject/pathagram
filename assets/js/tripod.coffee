@@ -1,5 +1,3 @@
-console.log "Welcome to Tripod"
-
 class TPixel
     constructor: (@canvas, @x, @y, @red, @green, @blue, alpha = 255) ->
         @alpha = alpha
@@ -52,7 +50,7 @@ class TImage
         if args.length == 1
             # grab source from Tripod
             @source = args[0]
-            @image = Tripod.getImage @sourcec
+            @image = Tripod.getImage @source
             [@width, @height] = [@image.width, @image.height]
             @createCanvas()
             
