@@ -22,7 +22,8 @@ $ () ->
             "Blur",
             "Darken Edges",
             "Add Noise",
-            "Superhero"
+            "Superhero",
+            "Fire and Sky"
     ] }
     $('.snippet-link').click () ->
         snippet = $(this).data 'snippet'
