@@ -20,6 +20,7 @@ $ () ->
             "Sepia",
             "Posterize",
             "Blur",
+            "Sharpen",
             "Darken Edges",
             "Add Noise",
             "Superhero",
