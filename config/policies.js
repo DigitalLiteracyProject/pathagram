@@ -19,6 +19,11 @@
 
 module.exports.policies = {
 
+  UserController: {
+    dashboard: 'isAuthenticated'
+  }
+
+
   /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions (`true` allows public     *

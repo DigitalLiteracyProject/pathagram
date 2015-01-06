@@ -44,6 +44,36 @@ module.exports.routes = {
     view: 'help'
   },
 
+  'GET /login': {
+    controller: 'UserController',
+    action: 'login'
+  },
+
+  'POST /login': {
+    controller: 'UserController',
+    action: 'authenticate'
+  },
+
+  '/logout': {
+    controller: 'UserController',
+    action: 'logout'
+  },
+
+  'GET /signup': {
+    controller: 'UserController',
+    action: 'signup'
+  },
+
+  'POST /signup': {
+    controller: 'UserController',
+    action: 'create'
+  },
+
+  '/dashboard': {
+    controller: 'UserController',
+    action: 'dashboard'
+  },
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

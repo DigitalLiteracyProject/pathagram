@@ -1,0 +1,19 @@
+<% if (req.session.flash) {%>
+
+    <% if(req.session.flash.success) { %>
+        <div class="alert alert-success" role="alert">
+          <i class="fa fa-check"></i>
+          <span class="sr-only">Success:</span>
+          <%= req.flash('success') %>
+        </div>
+    <% } %>
+
+    <% if(req.session.flash.error) { %>
+        <div class="alert alert-danger" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span>
+            <%= req.flash('error') %>
+        </div>
+    <% } %>
+    
+<% } %>
