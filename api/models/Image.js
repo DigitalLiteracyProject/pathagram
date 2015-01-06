@@ -7,7 +7,7 @@
 
 module.exports = {
 
-  identity: 'image',
+  identity: 'Image',
 
   attributes: {
     filename: {
@@ -22,7 +22,7 @@ module.exports = {
     },
 
     owner: {
-      model: 'user',
+      model: 'User',
       required: true
     }
   }

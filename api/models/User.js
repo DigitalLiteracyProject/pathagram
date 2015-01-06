@@ -9,7 +9,7 @@ var bcrypt = require('bcrypt');
 
 module.exports = {
 
-  identity: 'user',
+  identity: 'User',
 
   attributes: {
     username: {
@@ -24,14 +24,14 @@ module.exports = {
     },
 
     files: {
-      collection: 'file',
+      collection: 'Image',
       via: 'owner',
       required: true,
       defaultsTo: []
     },
 
     images: {
-      collection: 'image',
+      collection: 'Image',
       via: 'owner',
       required: true,
       defaultsTo: []
