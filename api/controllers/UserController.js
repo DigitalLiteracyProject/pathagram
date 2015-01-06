@@ -38,7 +38,7 @@ module.exports = {
   authenticate: function(req, res) {
     console.log(req.body);
     User.findOneByUsername(req.body.username).exec(function(err, user) {
-      if(err) {
+      if(err || !user) {
         console.log('Error finding user during login');
         req.flash('error', 'Invalid username, please try again');
         res.redirect('/login');
@@ -59,7 +59,8 @@ module.exports = {
   },
 
   logout: function(req, res) {
-    req.logOut();
+    console.log('Logging out...');
+    req.session.user = null;
     req.flash('success', 'You have been logged out!');
     res.redirect('/login');
   },
