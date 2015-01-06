@@ -5,7 +5,7 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
-var bcrypt = require(bcrypt);
+var bcrypt = require('bcrypt');
 
 module.exports = {
 
@@ -38,7 +38,7 @@ module.exports = {
           user.password = hash;
           cb(null, user);
         }
-      })
+      });
     });
   }
 

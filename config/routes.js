@@ -44,6 +44,11 @@ module.exports.routes = {
     view: 'help'
   },
 
+  '/login': {
+    controller: 'UserController',
+    action: 'login'
+  }
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
