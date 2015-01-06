@@ -9,6 +9,8 @@ var bcrypt = require('bcrypt');
 
 module.exports = {
 
+  identity: 'user',
+
   attributes: {
     username: {
       type: 'string',
@@ -21,11 +23,26 @@ module.exports = {
       required: true
     },
 
+    files: {
+      collection: 'file',
+      via: 'owner',
+      required: true,
+      defaultsTo: []
+    },
+
+    images: {
+      collection: 'image',
+      via: 'owner',
+      required: true,
+      defaultsTo: []
+    },
+
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;
       return obj;
-    }
+    },
+
   },
 
   beforeCreate: function(user, next) {
@@ -40,7 +57,8 @@ module.exports = {
         }
       });
     });
-  }
+  },
+
 
 };
 
