@@ -28,15 +28,15 @@ module.exports = {
     }
   },
 
-  beforeCreate: function(user, cb) {
+  beforeCreate: function(user, next) {
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(user.password, salt, function(err, hash) {
         if(err){
           console.log(err);
-          cb(err);
+          next(err);
         } else {
           user.password = hash;
-          cb(null, user);
+          next(null, user);
         }
       });
     });

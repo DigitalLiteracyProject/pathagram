@@ -44,10 +44,35 @@ module.exports.routes = {
     view: 'help'
   },
 
-  '/login': {
+  'GET /login': {
     controller: 'UserController',
     action: 'login'
-  }
+  },
+
+  'POST /login': {
+    controller: 'UserController',
+    action: 'authenticate'
+  },
+
+  '/logout': {
+    controller: 'UserController',
+    action: 'logout'
+  },
+
+  'GET /signup': {
+    controller: 'UserController',
+    action: 'signup'
+  },
+
+  'POST /signup': {
+    controller: 'UserController',
+    action: 'create'
+  },
+
+  '/dashboard': {
+    controller: 'UserController',
+    action: 'dashboard'
+  },
 
   /***************************************************************************
   *                                                                          *

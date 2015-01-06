@@ -63,7 +63,17 @@
                 <ul class="nav navbar-nav">
                     <li><a href="interface">Main</a></li>
                     <li><a href="help">Help</a></li>
-                    <li><a href="https://github.com/DigitalLiteracyProject/pathagram">GitHub</a></li>
+                    <% if (req.session.user) {%>
+                    <li><a href="dashboard">Dashboard</a></li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i>  <%= req.session.user.username %><span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">My Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/logout">Log out</a></li>
+                      </ul>
+                    </li>
+                    <% } %>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
