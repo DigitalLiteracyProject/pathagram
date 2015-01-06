@@ -22,9 +22,6 @@
 // no matter where we actually lift from.
 process.chdir(__dirname);
 
-// Custom => add New Relic script. Or put this in module.exports.bootstrap?
-require('newrelic');
-
 // Ensure a "sails" can be located:
 (function() {
   var sails;
