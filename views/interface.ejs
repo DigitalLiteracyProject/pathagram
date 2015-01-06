@@ -1,75 +1,133 @@
-<div class="well">
-    <span class="lead">
-        <span class="glyphicon glyphicon-wrench"></span>
-    Testing Tools
-    </span>
+<div ng-app="pathagram">
+    <div ng-controller="MainCtrl as main">
+        <div class="well">
+            <span class="lead">
+                <span class="glyphicon glyphicon-wrench"></span>
+            Testing Tools
+            </span>
 
-    <span class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            Run snippets <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" id="snippet-list"></ul>
-    </span>
-</div>
-
-<div class="row">
-    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12" id="file-sidebar"></div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
-        <ul class="nav nav-tabs" role="tablist" id="tab-list"></ul>
-        
-        <!--<h3 class="text-center">week1<span class="text-muted">.js</span></h3>-->
-
-        <div id="editor-window">
-            <div id="editor"></div>
-                <button class="btn btn-success btn-lg btn-block" id="run" data-loading-text='<span class="glyphicon glyphicon-play"></span> Working...' autocomplete="off">
-                    <span class="glyphicon glyphicon-play"></span> Run
+            <span class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Run snippets <span class="caret"></span>
                 </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="snippet in snippets">
+                        <a href="#" ng-click="loadSnippet(snippet)">
+                            {{snippet}}
+                        </a>
+                    </li>
+                </ul>
+            </span>
         </div>
-        <br>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-4">
-        <div id="canvas-holder">
-            <canvas id="main-canvas" width="0" , height="0"></canvas>
-        </div>
-        <div id="messages"></div>
-        <br>
-        <div id="console-holder" class="alert alert-info">
-            <p class="lead">Log</p>
-            <ul id="console"></ul>
-        </div>
-    </div>
-</div>
 
-<div class="container">
-    <div class="row">
-        <div class="panel-group" role="tablist">
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab">
-                    <h4 class="panel-title">
-                      <a class="collapsed" data-toggle="collapse" href="#api-reference-collapse">
-                        <span class="fa fa-support"></span> Quick reference
-                      </a>
-                    </h4>
-                </div>
-                <div id="api-reference-collapse" class="panel-collapse collapse" role="tabpanel">
-                    <div class="panel-body">
-                        <%- partial ('quick-ref.ejs') %>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12" id="file-sidebar">
+                <div class="panel panel-default">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <span class="fa fa-file"></span> Files
+                            </h3>
+                        </div>
+                        <div class="list-group">
+                            <div class="list-group-item lead" ng-repeat="file in files">
+                                <a href="#" ng-click="loadFile(file)">
+                                    <span class="glyphicon glyphicon-file"></span>
+                                    {{file.filename}}
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+                <ul class="nav nav-tabs" role="tablist" id="tab-list"></ul>
 
-<div id="modals">
-    <div class="modal" id="loading-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h2>
-                        <span class="fa fa-cog fa-spin"></span>
-                        Working...
-                    </h2>
+                <!--<h3 class="text-center">week1<span class="text-muted">.js</span></h3>-->
+
+                <div id="editor-window">
+                    <div id="editor"></div>
+                    <button class="btn btn-success btn-lg btn-block" id="run" autocomplete="off" ng-click="runInput()"
+                        data-loading-text='<span class="glyphicon glyphicon-play"></span> Working...'>
+                        <span class="glyphicon glyphicon-play"></span> Run
+                    </button>
+                </div>
+                <br>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-4">
+                <div id="canvas-holder">
+                    <img src="{{getFilename()}}" id="original-image" ng-show="canvasReady && !showEdited"
+                        width="{{getCanvasWidth()}}"
+                        height="{{getCanvasHeight()}}">
+                    <canvas id="main-canvas" width="0" , height="0"></canvas>
+                </div>
+
+                <div ng-show="ran">
+                    <div ng-show="success">
+                        <a class="btn btn-default" download="image.png" href="#" target="_blank">
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            Download Image
+                        </a>
+
+                        <span class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default" ng-class="{'active': !showEdited}"
+                                ng-click="viewOriginal()">
+                                <input type="radio" name="options"> Original
+                            </label>
+                            <label class="btn btn-default" ng-class="{'active': showEdited}"
+                                ng-click="viewEdited()">
+                                <input type="radio" name="options" checked> Edited
+                            </label>
+                        </span>
+
+                        <br><br>
+
+                        <div class="alert alert-success">
+                            Success!
+                        </div>
+                    </div>
+                    <div ng-show="!success" class="alert alert-danger">
+                        <strong ng-show="error.lineNumber">
+                            Line {{error.lineNumber}}:
+                        </strong>
+                        {{error.message}}
+                    </div>
+                </div>
+                <br>
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <span class="fa fa-quote-left"></span>
+                            Log
+                        </h3>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="log in logs track by $index">
+                            {{log}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="panel-group" role="tablist">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab">
+                            <h4 class="panel-title">
+                              <a class="collapsed" data-toggle="collapse" href="#api-reference-collapse">
+                                <span class="fa fa-support"></span> Quick reference
+                              </a>
+                            </h4>
+                        </div>
+                        <div id="api-reference-collapse" class="panel-collapse collapse" role="tabpanel">
+                            <div class="panel-body">
+                                <%- partial ('quick-ref.ejs') %>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
