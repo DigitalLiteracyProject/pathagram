@@ -56,15 +56,15 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-3 col-xs-4">
                 <div id="canvas-holder">
-                    <img src="{{getFilename()}}" id="original-image" ng-show="canvasReady && !showEdited"
-                        width="{{getCanvasWidth()}}"
-                        height="{{getCanvasHeight()}}">
+                    <img ng-src="{{getFilename()}}" id="original-image" ng-show="canvasReady && !showEdited"
+                        ng-attr-width="{{getCanvasWidth()}}"
+                        ng-attr-height="{{getCanvasHeight()}}">
                     <canvas id="main-canvas" width="0" , height="0"></canvas>
                 </div>
 
                 <div ng-show="ran">
                     <div ng-show="success">
-                        <a class="btn btn-default" download="image.png" href="#" target="_blank">
+                        <a class="btn btn-default" download="image.png" ng-href="{{getImageDataUrl()}}" target="_blank">
                             <span class="glyphicon glyphicon-download-alt"></span>
                             Download Image
                         </a>

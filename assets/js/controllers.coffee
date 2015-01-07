@@ -1,4 +1,4 @@
-angular.module('pathagram', [])
+angular.module('pathagram')
     .controller 'MainCtrl', ($scope, $http, files) ->
         # render ace editor
         editor = ace.edit "editor"
@@ -44,7 +44,6 @@ angular.module('pathagram', [])
 
         # Loads a sample text snippet, puts it in the editor, and executes it.
         $scope.loadSnippet = (snippet) ->
-            console.log snippet
             name = snippet.toLowerCase().replace(/\ /g, "-")
 
             $http.get("snippets/#{name}.js").success (data) ->
@@ -93,6 +92,9 @@ angular.module('pathagram', [])
         $scope.getCanvasWidth = -> $('#main-canvas').attr 'width'
         $scope.getCanvasHeight = -> $('#main-canvas').attr 'height'
         $scope.getFilename = -> Tripod.mainImage?.image?.src
+
+        # to download the image
+        $scope.getImageDataUrl = -> $('#main-canvas').get(0).toDataURL()
 
         # Prints debug information about an object
         $scope.log = (object) ->
