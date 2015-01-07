@@ -2,6 +2,11 @@
     max-height: 30px;
     display: inline !important;
 }
+
+#main-container{
+    padding: 1em;
+}
+
 #editor {
     position: relative;
     top: 0;
@@ -18,7 +23,7 @@
 #canvas-holder {
     position: relative;
 }
-#main-canvas {
+#main-canvas, #zoom-canvas {
     max-width: 100%;
 }
 #original-image {

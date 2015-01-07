@@ -71,15 +71,21 @@ angular.module('pathagram')
                     # it worked
                     $scope.success = yes
                     $scope.canvasReady = yes
-                    $scope.viewEdited()
+
+                    # do other success-based stuff later; if it throws error, we don't want it showing up here
+                    # since that'd make user think they made an error
                 catch error
                     console.log window.E = error
 
                     $scope.success = no
                     $scope.error = error
                 finally
-                    # $('#loading-modal').modal 'hide'
-                    # $('#run').button 'reset'
+                    # other things to do in case of success
+                    if $scope.success
+                        $scope.viewEdited()
+
+                        # prepare zoomer
+                        $scope.initZoom()
 
                     # you can only have $scope.$apply once in a call stack, so defer it
                     _.defer () -> $scope.$apply()
@@ -102,6 +108,68 @@ angular.module('pathagram')
             $scope.logs.push object + ""
 
         window.log = $scope.log
+
+        # zoom
+        $scope.zoomer = null # handles zoom operations of the original image
+        $scope.validZoomScales = []
+
+        # resets the zoomer with the contents of the canvas, and prepares events on its companion image
+        # re-run whenever new image is drawn on canvas
+        $scope.initZoom = () ->
+            $scope.zoomer = new TZoom $('#main-canvas'), $('#zoom-canvas')
+
+            # companion image, when clicked, will move the zoom center to the click location, then zoom
+            companionImage = $ '#zoom-image'
+            companionImage.unbind('click').bind 'click', (event) =>
+                $element  = $(event.target)
+
+                # get raw coordinates (where top left is 0,0)
+                offset = $element.offset()
+                relativeX = event.pageX - offset.left
+                relativeY = event.pageY - offset.top
+
+                # we can't go directly from raw coordinates to canvas coordinates
+                # since, if image is shrunk by browser, raw coordinates will be smaller than canvas coordinates
+                # since the image itself will be smaller
+                # so instead use a ratio: canvasX / canvasWidth = rawX / rawY
+
+                # convert to canvas coordinates
+                canvasWidth = $scope.zoomer.getWidth()
+                canvasHeight = $scope.zoomer.getHeight()
+                canvasX = Math.round canvasWidth * relativeX / $element.width()
+                canvasY = Math.round canvasHeight *relativeY / $element.height()
+
+                # now move the zoom canvas's center to that point and zoom
+                $scope.setZoomCenterX canvasX
+                $scope.setZoomCenterY canvasY
+                $scope.runZoom()
+
+            # set valid zoom scales based on image size
+            proposedZoomScales = [1, 2, 5, 10, 25, 50, 100, 250, 500, 1000]
+            # only use scales where min <= scale <= max
+            # TZoom lets us zoom in as far as possible (so that only 1 pixel shows up)
+            # but that's way too far for our use; restrict the max scale
+            maxZoomScale = $scope.zoomer.getMaxScale() / 5
+            minZoomScale = $scope.zoomer.getMinScale()
+            $scope.validZoomScales = _.filter proposedZoomScales, (scale) ->
+                minZoomScale <= scale <= maxZoomScale
+
+        $scope.showZoomModal = () ->
+            $('#zoom-modal').modal 'show'
+            # just so we have something to show...
+            @runZoom()
+
+        # loads the zoom canvas with the zoomed contents of the actual canvas
+        $scope.runZoom = () ->
+            return if not $scope.zoomer?
+            $scope.zoomer.zoom()
+        $scope.setZoomCenterX = (x) ->
+            $scope.zoomer.setCenterX x
+        $scope.setZoomCenterY = (y) ->
+            $scope.zoomer.setCenterY y
+        $scope.setZoomScale = (scale) ->
+            $scope.zoomer.setScale scale
+        $scope.getZoomScale = -> $scope.zoomer.getScale()
 
         # last bit of init
         $scope.loadSnippet "original"

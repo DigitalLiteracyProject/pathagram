@@ -20,7 +20,7 @@
             </span>
         </div>
 
-        <div class="row">
+        <div class="row" id="main-container">
             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12" id="file-sidebar">
                 <div class="panel panel-default">
                     <div class="panel panel-default">
@@ -47,7 +47,7 @@
 
                 <div id="editor-window">
                     <div id="editor"></div>
-                    <button class="btn btn-success btn-lg btn-block" id="run" autocomplete="off" ng-click="runInput()"
+                    <button class="btn btn-primary btn-lg btn-block" id="run" autocomplete="off" ng-click="runInput()"
                         data-loading-text='<span class="glyphicon glyphicon-play"></span> Working...'>
                         <span class="glyphicon glyphicon-play"></span> Run
                     </button>
@@ -56,7 +56,8 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-3 col-xs-4">
                 <div id="canvas-holder">
-                    <img ng-src="{{getFilename()}}" id="original-image" ng-show="canvasReady && !showEdited"
+                    <img ng-src="{{getFilename()}}" class="img-responsive" id="original-image"
+                        ng-show="canvasReady && !showEdited"
                         ng-attr-width="{{getCanvasWidth()}}"
                         ng-attr-height="{{getCanvasHeight()}}">
                     <canvas id="main-canvas" width="0" height="0"></canvas>
@@ -64,11 +65,6 @@
 
                 <div ng-show="ran">
                     <div ng-show="success">
-                        <a class="btn btn-default" download="image.png" ng-href="{{getImageDataUrl()}}" target="_blank">
-                            <span class="glyphicon glyphicon-download-alt"></span>
-                            Download Image
-                        </a>
-
                         <span class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default" ng-class="{'active': !showEdited}"
                                 ng-click="viewOriginal()">
@@ -79,6 +75,16 @@
                                 <input type="radio" name="options" checked> Edited
                             </label>
                         </span>
+
+                        <a class="btn btn-default" download="image.png" ng-href="{{getImageDataUrl()}}" target="_blank">
+                            <span class="fa fa-download"></span>
+                            <span class="hidden-xs hidden-sm">Download</span>
+                        </a>
+
+                        <a class="btn btn-default" ng-click="showZoomModal()">
+                            <span class="fa fa-search"></span>
+                            <span class="hidden-xs hidden-sm">Zoom</span>
+                        </a>
 
                         <br><br>
 
@@ -132,6 +138,50 @@
             </div>
         </div>
 
-        <canvas id="zoom-canvas" width="0" height="0"></canvas>
+        <div class="modal fade" tabindex="-1" id="zoom-modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">
+                            Zoom
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">
+                            Choose a zoom level, then click anywhere on the original image to zoom.
+                        </p>
+
+                        <div class="btn-group">
+                            <button class="btn btn-primary btn-toggle" data-toggle="dropdown">
+                                Zoom Level <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="scale in validZoomScales">
+                                    <a href ng-click="setZoomScale(scale) && runZoom()">
+                                        {{scale}}x
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h4 class="text-center">Original</h4>
+                                <img ng-src="{{getFilename()}}" id="zoom-image" class="img-responsive"
+                                ng-attr-width="{{getCanvasWidth()}}"
+                                ng-attr-height="{{getCanvasHeight()}}">
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h4 class="text-center">Zoomed {{getZoomScale()}}x</h4>
+                                <canvas id="zoom-canvas" width="0" height="0"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

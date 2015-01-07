@@ -71,10 +71,16 @@ class TZoom
             width: destRadii.left + destRadii.right,
             height: destRadii.top + destRadii.bottom
 
-        console.log sourceBox
-        console.log destBox
+        # normal drawImage() blurs the image; we need to manually set pixels
+        # to get the pixelation we need
 
-        @destContext.drawImage (@sourceCanvas.get 0),
+        # first clear the destination canvas to remove leftover stuff
+        @destContext.rect 0, 0, @width, @height
+        @destContext.fillStyle = "white"
+        @destContext.fill()
+
+        # now copy over the zoomed image information
+        @canvasPixelatedResize @sourceContext, @destContext,
             sourceBox.x,
             sourceBox.y,
             sourceBox.width,
@@ -83,10 +89,6 @@ class TZoom
             destBox.y,
             destBox.width,
             destBox.height
-
-        # TODO this is still too sharp
-        # use manual pixel manipulations here
-        # https://stackoverflow.com/questions/4421914/html5-canvas-how-to-zoom-in-the-pixels
 
     # Position
 
@@ -130,12 +132,18 @@ class TZoom
     setScale: (scale) ->
         # Ensure within right range
         # For now, just zoom in is supported
-        MAX_ZOOM = 20
-        MIN_ZOOM = 1
-        @scale = @clamp scale, MIN_ZOOM, MAX_ZOOM
+        @scale = @clamp scale, @getMinScale(), @getMaxScale()
 
     originalScale: ->
         @setScale 1
+
+    getMaxScale: ->
+        # no point zooming beyond the point where you'd see just 1 pixel
+        Math.min @width, @height
+
+    getMinScale: ->
+        # no zooming out yet!
+        1
 
     # private
 
@@ -153,3 +161,46 @@ TZoom::clamp = (num, min, max) ->
     if num > max
         return max
     return num
+
+# Draw canvas zoomed without antialiasing, so that you see pixelization
+# from https://stackoverflow.com/questions/4421914/html5-canvas-how-to-zoom-in-the-pixels
+TZoom::canvasPixelatedResize = (sourceContext, targetContext, sx, sy, sw, sh, tx, ty, tw, th) ->
+    source = sourceContext.getImageData(sx, sy, sw, sh)
+    sdata = source.data
+
+    target = targetContext.createImageData(tw, th)
+    tdata = target.data
+
+    mapx = []
+    ratiox = sw / tw
+    px = 0
+
+    i = 0
+    while i < tw
+        mapx[i] = 4 * Math.floor(px)
+        px += ratiox
+        ++i
+
+    mapy = []
+    ratioy = sh / th
+    py = 0
+    i = 0
+    while i < th
+        mapy[i] = 4 * sw * Math.floor(py)
+        py += ratioy
+        ++i
+
+    tp = 0
+    py = 0
+    while py < th
+        px = 0
+        while px < tw
+            sp = mapx[px] + mapy[py]
+            tdata[tp++] = sdata[sp++]
+            tdata[tp++] = sdata[sp++]
+            tdata[tp++] = sdata[sp++]
+            tdata[tp++] = sdata[sp++]
+            ++px
+        ++py
+
+    targetContext.putImageData target, tx, ty
