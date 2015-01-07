@@ -59,7 +59,7 @@
                     <img ng-src="{{getFilename()}}" id="original-image" ng-show="canvasReady && !showEdited"
                         ng-attr-width="{{getCanvasWidth()}}"
                         ng-attr-height="{{getCanvasHeight()}}">
-                    <canvas id="main-canvas" width="0" , height="0"></canvas>
+                    <canvas id="main-canvas" width="0" height="0"></canvas>
                 </div>
 
                 <div ng-show="ran">
@@ -131,5 +131,7 @@
                 </div>
             </div>
         </div>
+
+        <canvas id="zoom-canvas" width="0" height="0"></canvas>
     </div>
 </div>
