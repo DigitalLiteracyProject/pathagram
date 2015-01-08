@@ -1,7 +1,7 @@
 var memeTop = "Brace yourselves";
 var memeBottom = "The memes are coming";
 
-image = new TImage("harvard");
+var image = new TImage("harvard");
 image.setBrushColor(0, 0, 0);
 image.setBucketColor(255, 255, 255);
 image.setTextSize(40);

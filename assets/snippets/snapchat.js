@@ -1,4 +1,4 @@
-image = new TImage("harvard");
+var image = new TImage("harvard");
 
 // draw box; anchored at top left corner
 var boxX = 0;

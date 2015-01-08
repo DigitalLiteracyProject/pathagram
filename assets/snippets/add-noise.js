@@ -1,10 +1,10 @@
 var NOISE_LEVEL = 100;
 
-var rand = function(){
+function rand(){
     return Math.random() * NOISE_LEVEL - NOISE_LEVEL / 2;
 }
 
-image = new TImage("harvard");
+var image = new TImage("harvard");
 var pixels = image.getAllPixels();
 
 for (var i = 0; i < pixels.length; i++) {

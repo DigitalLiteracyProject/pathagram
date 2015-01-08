@@ -1,15 +1,15 @@
-image = new TImage("harvard");
-
 var RADIUS = 1;
 
+var image = new TImage("harvard");
 var width = image.getWidth();
 var height = image.getHeight();
+
 for (var i = 0; i < width; i++) {
     for (var j = 0; j < height; j++) {
         var pixel = image.getPixelAt(i, j);
         // smear by averaging with nearby pixels' values
         var neighbors = [
-            image.getPixelAt(i, j)              
+            image.getPixelAt(i, j)
         ];
         for (var m = i - RADIUS; m <= i + RADIUS; m++) {
             for (var n = j - RADIUS; n <= j + RADIUS; n++) {
@@ -27,7 +27,7 @@ for (var i = 0; i < width; i++) {
                 sumBlue += neighbor.getBlue();
             }
         }
-        
+
         pixel.setRGBA(sumRed / n, sumGreen / n, sumBlue / n);
     }
 }
