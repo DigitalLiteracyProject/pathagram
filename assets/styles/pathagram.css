@@ -32,3 +32,6 @@
     left: 0;
     /*display: none;*/
 }
+#zoom-image {
+    cursor: zoom-in;
+}

@@ -133,15 +133,38 @@ class TImage
     # Draws a rectangle
     rect: (args...) -> @canvas.rect args...
 
+    # Draws text
+    text: (args...) -> @canvas.text args...
+
+    # text size
+    setTextSize: (args...) -> @canvas.setTextSize args...
+
+    getTextSize: -> @canvas.getTextSize()
+
+    # text font family
+    setTextFont: (args...) -> @canvas.setTextFont args...
+
+    getTextFont: -> @canvas.getTextFont()
+
+    # text horizontal alignment
+    setTextAlign: (args...) -> @canvas.setTextAlign args...
+
+    getTextAlign: -> @canvas.getTextAlign()
+
+    # text vertical alignment
+    setTextVerticalAlign: (args...) -> @canvas.setTextVerticalAlign args...
+
+    getTextVerticalAlign: -> @canvas.getTextVerticalAlign()
+
     # Sets the border color for rect/ellipse calls
     setBrushColor: (args...) -> @canvas.setBrushColor args...
 
-    getBrushColor: () -> @canvas.getBrushColor()
+    getBrushColor: -> @canvas.getBrushColor()
 
     # Sets the fill color for rect/ellipse calls
     setBucketColor: (args...) -> @canvas.setBucketColor args...
 
-    getBucketColor: () -> @canvas.getBucketColor()
+    getBucketColor: -> @canvas.getBucketColor()
 
 class TCanvas
     constructor: (@width, @height) ->
@@ -150,8 +173,13 @@ class TCanvas
         @imageData = @context.createImageData @width, @height
         @element.attr width: @width, height: @height
 
+        # drawing and text settings
         @brushColor = [0, 0, 0, 255]
         @bucketColor = [0, 0, 0, 255]
+        @textSize = 16
+        @textFont = "sans-serif"
+        @textAlign = "left"
+        @textVerticalAlign = "bottom"
 
     # Updates the canvas with the current image data
     render: ->
@@ -187,18 +215,28 @@ class TCanvas
         # 4 elements (r, g, b, a) per pixel
         (x + y * @imageData.width) * 4
 
-    # After a draw function actually creates a path, this handles the coloring of the path (stroke and fill), and refreshing image data.
+    # After a draw function actually creates a path,
+    # this handles the coloring of the path (stroke and fill), and refreshing image data.
     strokeAndFill: () ->
-        # stroke (border)
-        @context.strokeStyle = "#" + @brushColor[0].hex(2) + @brushColor[1].hex(2) + @brushColor[2].hex(2)
-        @context.globalAlpha = @brushColor[3] / 255
+        @setStrokeStyle()
         @context.stroke()
-        # fill
-        @context.fillStyle = "#" + @bucketColor[0].hex(2) + @bucketColor[1].hex(2) + @bucketColor[2].hex(2)
-        @context.globalAlpha = @bucketColor[3] / 255
+
+        @setFillStyle()
         @context.fill()
 
         @refreshImageData()
+
+    # Loads the context's stroke color with the current brush color information.
+    # Call this before using @contex.fill().
+    setStrokeStyle: () ->
+        @context.strokeStyle = "#" + @brushColor[0].hex(2) + @brushColor[1].hex(2) + @brushColor[2].hex(2)
+        @context.globalAlpha = @brushColor[3] / 255
+
+    # Loads the context's fill color with the current bucket color information.
+    # Call this before using @context.fill().
+    setFillStyle: () ->
+        @context.fillStyle = "#" + @bucketColor[0].hex(2) + @bucketColor[1].hex(2) + @bucketColor[2].hex(2)
+        @context.globalAlpha = @bucketColor[3] / 255
 
     # Draws an ellipse centered at (x,y)
     # From http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
@@ -229,6 +267,46 @@ class TCanvas
         @context.rect x, y, width, height
 
         @strokeAndFill()
+
+    # Draws text with top left corner at (x,y)
+    text: (text, x, y) ->
+        @context.font = "#{@textSize}px '#{@textFont}', sans-serif"
+        @context.textAlign = @textAlign
+        @context.textBaseline = @textVerticalAlign
+
+        @setStrokeStyle()
+        @context.strokeText text + "", x, y
+
+        @setFillStyle()
+        @context.fillText text + "", x, y
+
+        @refreshImageData()
+
+    # font size, in pixels, for text
+    setTextSize: (size) ->
+        @textSize = size
+
+    getTextSize: -> @textSize
+
+    # font family for text
+    setTextFont: (font) ->
+        @textFont = font
+
+    getTextFont: -> @textFont
+
+    # Horizontal alignment of text
+    setTextAlign: (align) ->
+        if align not in ["left", "center", "right"] then align = "left"
+        @textAlign = align
+
+    getTextAlign: -> @textAlign
+
+    # Vertical alignment of text
+    setTextVerticalAlign: (align) ->
+        if align not in ["top", "middle", "bottom"] then align = "bottom"
+        @textVerticalAlign = align
+
+    getTextVerticalAlign: -> @textVerticalAlign
 
     # Sets the border color for rect/ellipse calls
     setBrushColor: (red, green, blue, alpha = 255) ->

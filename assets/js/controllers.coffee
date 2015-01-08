@@ -169,7 +169,8 @@ angular.module('pathagram')
             $scope.zoomer.setCenterY y
         $scope.setZoomScale = (scale) ->
             $scope.zoomer.setScale scale
-        $scope.getZoomScale = -> $scope.zoomer.getScale()
+        $scope.getZoomScale = ->
+            if $scope.zoomer? then $scope.zoomer.getScale() else 1
 
         # last bit of init
         $scope.loadSnippet "original"
