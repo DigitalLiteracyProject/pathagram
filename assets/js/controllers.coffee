@@ -40,6 +40,7 @@ angular.module('pathagram')
             "Add Noise",
             "Superhero",
             "Meme",
+            "Snapchat",
             "Fire and Sky"
         ]
 

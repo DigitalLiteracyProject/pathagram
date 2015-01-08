@@ -177,7 +177,7 @@ class TCanvas
         @brushColor = [0, 0, 0, 255]
         @bucketColor = [0, 0, 0, 255]
         @textSize = 16
-        @textFont = "sans-serif"
+        @textFont = $("body").css("font-family") ? "sans-serif"
         @textAlign = "left"
         @textVerticalAlign = "bottom"
 
@@ -270,7 +270,9 @@ class TCanvas
 
     # Draws text with top left corner at (x,y)
     text: (text, x, y) ->
-        @context.font = "#{@textSize}px '#{@textFont}', sans-serif"
+        # ensure font has quotes in it if it doesn't alreday
+        font = if "\"" in @textFont or "\'" in @textFont then @textFont else "'#{@textFont}'"
+        @context.font = "#{@textSize}px #{font}, sans-serif"
         @context.textAlign = @textAlign
         @context.textBaseline = @textVerticalAlign
 
