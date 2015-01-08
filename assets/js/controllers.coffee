@@ -39,6 +39,7 @@ angular.module('pathagram')
             "Darken Edges",
             "Add Noise",
             "Superhero",
+            "Meme",
             "Fire and Sky"
         ]
 

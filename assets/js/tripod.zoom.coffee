@@ -75,9 +75,7 @@ class TZoom
         # to get the pixelation we need
 
         # first clear the destination canvas to remove leftover stuff
-        @destContext.rect 0, 0, @width, @height
-        @destContext.fillStyle = "white"
-        @destContext.fill()
+        @destContext.clearRect 0, 0, @width, @height
 
         # now copy over the zoomed image information
         @canvasPixelatedResize @sourceContext, @destContext,
