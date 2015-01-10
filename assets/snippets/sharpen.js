@@ -18,7 +18,7 @@ for (var i = 0; i < width; i++) {
                 neighbors.push(image.getPixelAt(m, n));
             }
         }
-        
+
         var sumRed = 0, sumGreen = 0, sumBlue = 0;
         var n = 0;
         for (var k = 0; k < neighbors.length; k++) {
@@ -32,17 +32,17 @@ for (var i = 0; i < width; i++) {
         }
 
         // make this pixel diverge more from its neighbors to increase sharpness
-        var baseRed = sumRed / n;
-        var baseGreen = sumGreen / n;
-        var baseBlue = sumBlue / n;
+        var avgRed = sumRed / n;
+        var avgGreen = sumGreen / n;
+        var avgBlue = sumBlue / n;
         var red = pixel.getRed();
         var blue = pixel.getBlue();
         var green = pixel.getGreen();
 
         pixel.setRGBA(
-	        (red - baseRed) * SHARPNESS + baseRed,
-	        (green - baseGreen) * SHARPNESS + baseGreen,
-	        (blue - baseBlue) * SHARPNESS + baseBlue
+	        (red - avgRed) * SHARPNESS + avgRed,
+	        (green - avgGreen) * SHARPNESS + avgGreen,
+	        (blue - avgBlue) * SHARPNESS + avgBlue
         );
     }
 }
