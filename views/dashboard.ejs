@@ -4,7 +4,7 @@
 <% if (user.images.length > 0){ %>
   <ul>
   <% user.images.forEach(function(image) {%>
-      <li><a href="/uploads/<%= image.path %>"><%= image.imageName %></a></li>
+      <li><a href="<%= image.path %>"><%= image.imageName %></a></li>
   <% }); %>
   </ul>
 <% } else {%>

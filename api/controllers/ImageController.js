@@ -22,8 +22,8 @@ module.exports = {
 					var filepath = uploadedFile[0].fd.split(upload_path)[1];
 
 					Image.create({
-						imageName: uploadedFile[0].filename,
-						path: filepath,
+						imageName:  uploadedFile[0].filename,
+						path: '/uploads/' + filepath,
 						owner: req.session.user.id
 					}).exec(function(err, image){
 						if(err) {
