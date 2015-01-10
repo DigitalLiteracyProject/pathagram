@@ -1,6 +1,6 @@
 <h2>Quick Tripod Reference</h2>
 
-<strong><em>For more in-depth reference, check out the <a href="help">Help</a> tab.</em></strong>
+<p><em>For more in-depth reference, check out the <a href="help">Help</a> tab.</em></p>
 
 <h3>TImage</h3>
 
@@ -15,65 +15,99 @@
 
 <p>Working with a TImage:</p>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>Function</th>
-            <th>Returns</th>
-            <th>Description</th>
+            <th>Function </th>
+            <th> Returns </th>
+            <th> Description</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td><code>getWidth()</code> 
-            </td>
-            <td>Number</td>
-            <td>Width (# columns)</td>
+            <td><code>getWidth()</code> </td>
+            <td> Number </td>
+            <td> Width (# columns)</td>
         </tr>
         <tr>
-            <td><code>getHeight()</code> 
-            </td>
-            <td>Number</td>
-            <td>Height (# rows)</td>
+            <td><code>getHeight()</code> </td>
+            <td> Number </td>
+            <td> Height (# rows)</td>
         </tr>
         <tr>
-            <td><code>getSize()</code> 
-            </td>
-            <td>Number</td>
-            <td>Number of pixels (width * height)</td>
+            <td><code>getSize()</code> </td>
+            <td> Number </td>
+            <td> Number of pixels (width * height)</td>
         </tr>
         <tr>
-            <td><code>getAllPixels()</code> 
-            </td>
-            <td>TPixel array</td>
-            <td>All the pixels in the image</td>
+            <td><code>getAllPixels()</code> </td>
+            <td> TPixel array </td>
+            <td> All the pixels in the image</td>
         </tr>
         <tr>
-            <td><code>getPixelAt(x, y)</code> 
-            </td>
-            <td>TPixel</td>
-            <td>Pixel at column x, row y</td>
+            <td><code>getPixelAt(x, y)</code> </td>
+            <td> TPixel </td>
+            <td> Pixel at column x, row y</td>
         </tr>
         <tr>
-            <td><code>ellipse(x, y, width, height)</code> 
-            </td>
-            <td> <em>nothing</em> 
-            </td>
-            <td>Draws an ellipse centered at (x, y)</td>
+            <td><code>ellipse(x, y, width, height)</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Draws an ellipse centered at (x, y)</td>
         </tr>
         <tr>
-            <td><code>rect(x, y, width, height)</code> 
-            </td>
-            <td> <em>nothing</em> 
-            </td>
-            <td>Draws a rect with top left corner at (x, y)</td>
+            <td><code>rect(x, y, width, height)</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Draws a rect with top left corner at (x, y)</td>
         </tr>
         <tr>
-            <td><code>refresh()</code> 
-            </td>
-            <td> <em>nothing</em> 
-            </td>
-            <td>Updates the image - call after editing image</td>
+            <td><code>text(text, x, y)</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Draws the given text at (x, y); its positioning relative to (x, y) is determined by the text alignment</td>
+        </tr>
+        <tr>
+            <td><code>refresh()</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Updates the image - call after editing image</td>
+        </tr>
+        <tr>
+            <td><code>getBrushColor()</code> </td>
+            <td> Number array </td>
+            <td> The color used for outlines of shapes and text; red, green, blue, and alpha in that order</td>
+        </tr>
+        <tr>
+            <td><code>setBrushColor(r, g, b, [a])</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Changes outline color; the last parameter, alpha, is optional and will be 255 (fully opaque) if you don't provide it</td>
+        </tr>
+        <tr>
+            <td><code>getBucketColor()</code> </td>
+            <td> Number array </td>
+            <td> The color used to fill shapes and text; red, green, blue, and alpha in that order</td>
+        </tr>
+        <tr>
+            <td><code>setBucketColor(r, g, b, [a])</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Changes fill color; the last parameter, alpha, is optional and will be 255 (fully opaque) if you don't provide it</td>
+        </tr>
+        <tr>
+            <td><code>setTextSize(size)</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Changes the text size, in pixels</td>
+        </tr>
+        <tr>
+            <td><code>setTextFont(font)</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Changes the text font (default is 'sans-serif')</td>
+        </tr>
+        <tr>
+            <td><code>setTextAlign(align)</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Changes the text's horizontal alignment ("left", "center", or "right")</td>
+        </tr>
+        <tr>
+            <td><code>setTextVerticalAlign(align)</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Changes the text's vertical alignment ("top", "middle", or "bottom")</td>
         </tr>
     </tbody>
 </table>
@@ -85,78 +119,64 @@
 
 <p>Working with a TPixel:</p>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>Function</th>
-            <th>Returns</th>
-            <th>Description</th>
+            <th>Function </th>
+            <th> Returns </th>
+            <th> Description</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td><code>getRed()</code> 
-            </td>
-            <td>Number</td>
-            <td>Red value (0-255)</td>
+            <td><code>getRed()</code> </td>
+            <td> Number </td>
+            <td> Red value (0-255)</td>
         </tr>
         <tr>
-            <td><code>setRed(r)</code> 
-            </td>
-            <td> <em>nothing</em> 
-            </td>
-            <td>Changes red value (0-255)</td>
+            <td><code>setRed(r)</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Changes red value (0-255)</td>
         </tr>
         <tr>
-            <td><code>getGreen()</code> 
-            </td>
-            <td>Number</td>
-            <td>Green value (0-255)</td>
+            <td><code>getGreen()</code> </td>
+            <td> Number </td>
+            <td> Green value (0-255)</td>
         </tr>
         <tr>
-            <td><code>setGreen(g)</code> 
-            </td>
-            <td> <em>nothing</em> 
-            </td>
-            <td>Changes green value (0-255)</td>
+            <td><code>setGreen(g)</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Changes green value (0-255)</td>
         </tr>
         <tr>
-            <td><code>getBlue()</code> 
-            </td>
-            <td>Number</td>
-            <td>Blue value (0-255)</td>
+            <td><code>getBlue()</code> </td>
+            <td> Number </td>
+            <td> Blue value (0-255)</td>
         </tr>
         <tr>
-            <td><code>setBlue(b)</code> 
-            </td>
-            <td> <em>nothing</em> 
-            </td>
-            <td>Changes blue value (0-255)</td>
+            <td><code>setBlue(b)</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Changes blue value (0-255)</td>
         </tr>
         <tr>
-            <td><code>getAlpha()</code> 
-            </td>
-            <td>Number</td>
-            <td>Alpha (transparency) value (0-255)</td>
+            <td><code>getAlpha()</code> </td>
+            <td> Number </td>
+            <td> Alpha (transparency) value (0-255)</td>
         </tr>
         <tr>
-            <td><code>setAlpha(a)</code> 
-            </td>
-            <td>Number</td>
-            <td>Changes alpha (transparency) value (0-255)</td>
+            <td><code>setAlpha(a)</code> </td>
+            <td> Number </td>
+            <td> Changes alpha (transparency) value (0-255)</td>
         </tr>
         <tr>
-            <td><code>setRGBA(r, g, b, a)</code> 
-            </td>
-            <td> <em>nothing</em> 
-            </td>
-            <td>Changes red, green, blue, and alpha (transparency) all at once</td>
+            <td><code>setRGBA(r, g, b, [a])</code> </td>
+            <td> <em>nothing</em> </td>
+            <td> Changes red, green, blue, and alpha (transparency) all at once; the last parameter, alpha, is optional and will be 255 (fully opaque) if you don't provide it</td>
         </tr>
         <tr>
-            <td><code>getRGBA()</code> 
-            </td>
-            <td>Number array</td>
-            <td>Red, green, blue, and alpha (transparency), in that order</td>
+            <td><code>getRGBA()</code> </td>
+            <td> Number array </td>
+            <td> Red, green, blue, and alpha (transparency), in that order</td>
         </tr>
     </tbody>
 </table>
