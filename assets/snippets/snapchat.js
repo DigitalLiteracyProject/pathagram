@@ -4,7 +4,7 @@ var image = new TImage("harvard");
 var boxX = 0;
 var boxY = image.getHeight() * 3/4;
 var boxWidth = image.getWidth();
-var boxHeight = 32;
+var boxHeight = image.getHeight() / 10;
 image.setBrushColor(0, 0, 0, 0); // no border
 image.setBucketColor(0, 0, 0, 255 / 2); // semi-transparent black
 image.rect(boxX, boxY, boxWidth, boxHeight);

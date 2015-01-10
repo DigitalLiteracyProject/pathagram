@@ -3,7 +3,7 @@ angular.module('pathagram')
         files = [
             {
                 filename: "yo.js",
-                source: "console.log('yo!');"
+                contents: "console.log('yo!');"
             }
         ]
 

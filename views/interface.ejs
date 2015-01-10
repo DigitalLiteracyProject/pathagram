@@ -30,12 +30,28 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
+                                <span class="fa fa-file-image-o"></span> Images
+                            </h3>
+                        </div>
+                        <div class="list-group">
+                            <div class="list-group-item lead" ng-repeat="image in images | orderBy: 'name'">
+                                <img ng-src="{{image.path}}" class="list-image">
+                                {{image.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
                                 <span class="fa fa-file"></span> Files
                             </h3>
                         </div>
                         <div class="list-group">
-                            <div class="list-group-item lead" ng-repeat="file in files">
-                                <a href="#" ng-click="loadFile(file)">
+                            <div class="list-group-item lead" ng-repeat="file in files | orderBy: 'filename'">
+                                <a href ng-click="loadFile(file)">
                                     <span class="glyphicon glyphicon-file"></span>
                                     {{file.filename}}
                                 </a>
@@ -46,8 +62,6 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
                 <ul class="nav nav-tabs" role="tablist" id="tab-list"></ul>
-
-                <!--<h3 class="text-center">week1<span class="text-muted">.js</span></h3>-->
 
                 <div id="editor-window">
                     <div id="editor"></div>
@@ -69,7 +83,7 @@
 
                 <div ng-show="ran">
                     <div ng-show="success">
-                        <span class="btn-group" data-toggle="buttons">
+                        <span class="btn-group btn-group-justified" data-toggle="buttons">
                             <label class="btn btn-default" ng-class="{'active': !showEdited}"
                                 ng-click="viewOriginal()">
                                 <input type="radio" name="options"> Original
@@ -79,6 +93,8 @@
                                 <input type="radio" name="options" checked> Edited
                             </label>
                         </span>
+
+                        <br>
 
                         <a class="btn btn-default" download="image.png" ng-href="{{getImageDataUrl()}}" target="_blank">
                             <span class="fa fa-download"></span>

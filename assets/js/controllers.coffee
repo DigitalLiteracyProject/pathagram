@@ -1,20 +1,25 @@
 angular.module('pathagram')
-    .controller 'MainCtrl', ($scope, $http, files) ->
+    .controller 'MainCtrl', ($scope, $http, files, images) ->
         # render ace editor
         editor = ace.edit "editor"
         editor.setTheme "ace/theme/xcode"
         editor.getSession().setUseWrapMode true
         editor.getSession().setMode "ace/mode/javascript"
 
-        # init tripod
-        Tripod.setSources {
-            "new-york": "../images/new-york.jpg",
-            "boston": "../images/boston.jpg",
-            "harvard": "../images/harvard-yard.jpg"
-            }
-
         # files
         $scope.files = files
+
+        # images
+        $scope.images = images
+
+        # init tripod by preparing the images it uses
+        # we need to go up a level since files given to us are relative to /assets
+        # but we're in the /js folder, which is a child of that
+        # APPEND_TO_FILE_PATH = "../"
+        sources = {}
+        _.each $scope.images, (image) ->
+            sources[image.name] = image.path
+        Tripod.setSources sources
 
         # init scope
         $scope.ran = no # turns yes once code is run
@@ -54,7 +59,7 @@ angular.module('pathagram')
 
         # Loads in (but doesn't run) a file from the files service.
         $scope.loadFile = (file) ->
-            editor.setValue file.source
+            editor.setValue file.contents
 
         # Runs the code inside the editing box
         $scope.runInput = () ->
