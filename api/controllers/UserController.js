@@ -18,7 +18,11 @@ module.exports = {
   },
 
   signup: function(req, res) {
-    res.view('signup');
+    if(req.session.user) {
+      res.redirect('dashboard');
+    } else {
+      res.view('signup');
+    }
   },
 
   create: function(req, res, next) {

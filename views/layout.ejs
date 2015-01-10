@@ -72,6 +72,9 @@
                         <li><a href="/logout">Log out</a></li>
                       </ul>
                     </li>
+                    <% } else {%>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/signup">Sign Up</a></li>
                     <% } %>
                 </ul>
             </div>
@@ -80,8 +83,9 @@
         <!-- /.container-fluid -->
     </nav>      
       
-      
-    <%- body %>
+    <div class="container">  
+        <%- body %>
+    </div>
 
 
 
