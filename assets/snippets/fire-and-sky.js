@@ -2,12 +2,13 @@
  * Maps the given ratio onto a new ratio.
  * map(10, 20, 100, 200) = 150 (10/20 = 50%, so pick the number 50% between 100 and 200 => 150)
  */
-map = function(x, of, min, max){
+function map(x, of, min, max){
     return x/of * (max-min) + min;
 }
 
-image = new TImage("harvard");
+var image = new TImage("harvard");
 var pixels = image.getAllPixels();
+
 for (var i = 0; i < pixels.length; i++) {
     var pixel = pixels[i];
     if (pixel.getAlpha() > 0) {

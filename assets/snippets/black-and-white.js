@@ -1,6 +1,4 @@
-var THRESHOLD;
-
-image = new TImage("harvard");
+var image = new TImage("harvard");
 var pixels = image.getAllPixels();
 
 // determine threshold
@@ -15,7 +13,7 @@ for (var i = 0; i < pixels.length; i++) {
     }
 }
 
-THRESHOLD = sum / n;
+var THRESHOLD = sum / n;
 
 for (var i = 0; i < pixels.length; i++) {
     // make pixel darker or lighter

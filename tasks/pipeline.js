@@ -18,7 +18,8 @@ var cssFilesToInject = [
   'styles/**/*.css',
     'bootstrap/css/bootstrap.min.css',
     'bootstrap/css/paper.min.css',
-    'font-awesome/css/*.css'
+    'font-awesome/css/*.css',
+    'dependencies/styles/**/*.css'
 ];
 
 
@@ -30,6 +31,8 @@ var jsFilesToInject = [
   'dependencies/sails.io.js',
 
   // Dependencies like jQuery, or Angular are brought in here
+  // jQuery first since other dependencies depend on it
+  'dependencies/jquery.min.js',
   'dependencies/**/*.js',
   'bootstrap/js/bootstrap.min.js',
 

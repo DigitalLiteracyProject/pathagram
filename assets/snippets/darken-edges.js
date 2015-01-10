@@ -1,8 +1,9 @@
 var DARKEN = 120;
 
-image = new TImage("harvard");
+var image = new TImage("harvard");
 var width = image.getWidth();
 var height = image.getHeight();
+
 for (var i = 0; i < width; i++) {
     for (var j = 0; j < height; j++) {
         var pixel = image.getPixelAt(i, j);
@@ -13,7 +14,7 @@ for (var i = 0; i < width; i++) {
         var dyPercent = dy / height;
         var closerDistPercent = Math.min(dxPercent, dyPercent);
         var darken = DARKEN * (0.5 - closerDistPercent);
-        
+
         pixel.setRed(pixel.getRed() - darken);
         pixel.setGreen(pixel.getGreen() - darken);
         pixel.setBlue(pixel.getBlue() - darken);

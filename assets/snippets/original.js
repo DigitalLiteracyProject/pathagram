@@ -1,4 +1,4 @@
-image = new TImage("harvard");
+var image = new TImage("harvard");
 
 log("Hi from Pathagram!");
 

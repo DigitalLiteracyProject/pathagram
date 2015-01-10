@@ -1,5 +1,6 @@
-image = new TImage("harvard");
+var image = new TImage("harvard");
 var pixels = image.getAllPixels();
+
 for (var i = 0; i < pixels.length; i++) {
     var pixel = pixels[i];
     if (pixel.getAlpha() > 0) {

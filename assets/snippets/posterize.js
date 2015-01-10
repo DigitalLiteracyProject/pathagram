@@ -1,6 +1,6 @@
 var POSTERIZATION = 60;
 
-image = new TImage("harvard");
+var image = new TImage("harvard");
 var pixels = image.getAllPixels();
 
 for (var i = 0; i < pixels.length; i++) {

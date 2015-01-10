@@ -1,7 +1,6 @@
-var THRESHOLD;
 var RATIO = 0.8;
 
-image = new TImage("harvard");
+var image = new TImage("harvard");
 var pixels = image.getAllPixels();
 
 // determine threshold
@@ -16,7 +15,7 @@ for (var i = 0; i < pixels.length; i++) {
     }
 }
 
-THRESHOLD = sum / n;
+var THRESHOLD = sum / n;
 
 for (var i = 0; i < pixels.length; i++) {
     // set to either darker or lighter
@@ -26,11 +25,11 @@ for (var i = 0; i < pixels.length; i++) {
         if (avg < THRESHOLD) {
             pixel.setRed(pixel.getRed() * RATIO);
             pixel.setGreen(pixel.getGreen() * RATIO);
-            pixel.setBlue(pixel.getBlue() * RATIO);            
+            pixel.setBlue(pixel.getBlue() * RATIO);
         } else {
             pixel.setRed(pixel.getRed() / RATIO);
             pixel.setGreen(pixel.getGreen() / RATIO);
-            pixel.setBlue(pixel.getBlue() / RATIO);  
+            pixel.setBlue(pixel.getBlue() / RATIO);
         }
     }
 }

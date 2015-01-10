@@ -4,8 +4,9 @@ var RED_MULT = 112 / SEPIA_FACTOR;
 var GREEN_MULT = 66 / SEPIA_FACTOR;
 var BLUE_MULT = 20 / SEPIA_FACTOR;
 
-image = new TImage("harvard");
+var image = new TImage("harvard");
 var pixels = image.getAllPixels();
+
 for (var i = 0; i < pixels.length; i++) {
     var pixel = pixels[i];
     if (pixel.getAlpha() > 0) {
