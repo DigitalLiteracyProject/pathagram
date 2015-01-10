@@ -29,12 +29,13 @@ module.exports = {
 
     User.create(req.params.all()).exec(function(err, user) {
       if(err) {
+        console.log(err);
         console.log('Error creating user');
         req.flash('error', 'Error creating User');
         res.redirect('/signup');
       } else {
         req.flash('success', 'New User Created');
-        res.redirect('/login');
+        res.redirect('login');
       }
     });
   },
@@ -70,7 +71,15 @@ module.exports = {
   },
 
   dashboard: function(req, res){
-    res.view('dashboard');
+    User.findOneById(req.session.user.id).populate('images').exec(function(err, user){
+      if(err) {
+        req.flash('error', 'Error finding user information!');
+        res.view('dashboard');
+      } else {
+        console.log(user.toJSON());
+        res.view('dashboard', {user: user.toJSON()});
+      }
+    });
   }
 
 };

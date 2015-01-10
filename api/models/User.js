@@ -24,16 +24,14 @@ module.exports = {
     },
 
     files: {
-      collection: 'Image',
+      collection: 'File',
       via: 'owner',
-      required: true,
       defaultsTo: []
     },
 
     images: {
       collection: 'Image',
       via: 'owner',
-      required: true,
       defaultsTo: []
     },
 

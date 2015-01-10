@@ -6,8 +6,6 @@
  */
 
 module.exports = {
-  upload: function(req, res) {
-    res.view('image_upload');
-  }
+
 };
 

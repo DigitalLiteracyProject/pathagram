@@ -21,6 +21,10 @@ module.exports.policies = {
 
   UserController: {
     dashboard: 'isAuthenticated'
+  },
+
+  ImageController: {
+    upload_form: 'isAuthenticated'
   }
 
 

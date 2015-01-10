@@ -1,0 +1,14 @@
+<h2>Upload an image!</h2>
+
+<%- partial('partials/_flash_messages') %>
+
+<!-- Standar Form -->
+<h4>Select files from your computer</h4>
+<form action="/upload" method="post" enctype="multipart/form-data" id="js-upload-form" accept=".gif,.jpg,.jpeg,.png">
+<div class="form-inline">
+  <div class="form-group">
+    <input type="file" name="image" id="js-upload-file" multiple>
+  </div>
+  <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload Image</button>
+</div>
+</form>

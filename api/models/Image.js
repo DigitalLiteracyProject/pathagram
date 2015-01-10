@@ -10,12 +10,12 @@ module.exports = {
   identity: 'Image',
 
   attributes: {
-    filename: {
+    imageName: {
       type: 'string',
       required: true,
     },
 
-    url: {
+    path: {
       type: 'string',
       required: true,
       defaultsTo: ''

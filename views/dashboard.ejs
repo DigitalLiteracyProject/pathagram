@@ -1,1 +1,13 @@
-<h1>Welcome to the dashboard</h1>
+<h2>Welcome to the dashboard</h2>
+
+<h3>My Images</h3>
+<% if (user.images.length > 0){ %>
+  <ul>
+  <% user.images.forEach(function(image) {%>
+      <li><a href="/uploads/<%= image.path %>"><%= image.imageName %></a></li>
+  <% }); %>
+  </ul>
+<% } else {%>
+  You don't have any images yet!
+<% } %>
+Upload more images <a href="/upload">here</a>
