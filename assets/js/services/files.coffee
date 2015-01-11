@@ -4,6 +4,10 @@ angular.module('pathagram')
             {
                 filename: "yo.js",
                 contents: "console.log('yo!');"
+            },
+            {
+                filename: "bro.js",
+                contents: "console.log('bro!');"
             }
         ]
 

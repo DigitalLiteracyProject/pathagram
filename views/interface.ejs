@@ -38,6 +38,10 @@
                                 <img ng-src="{{image.path}}" class="list-image">
                                 {{image.name}}
                             </div>
+                            <div class="list-group-item lead">
+                              <i class="fa fa-upload"></i>
+                              <a href="/upload">Upload</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -64,6 +68,9 @@
                 <ul class="nav nav-tabs" role="tablist" id="tab-list"></ul>
 
                 <div id="editor-window">
+                  <ul class="nav nav-tabs">
+                    <li role="presentation" ng-repeat="tab in tabs track by $index" ng-class="{'active': $index == activeTab}" ng-click="changeActiveTab($index)"><a href="#">{{tab.filename}}</a></li>
+                  </ul>
                     <div id="editor"></div>
                     <button class="btn btn-primary btn-lg btn-block" id="run" autocomplete="off" ng-click="runInput()"
                         data-loading-text='<span class="glyphicon glyphicon-play"></span> Working...'>

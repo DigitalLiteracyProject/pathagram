@@ -8,6 +8,7 @@
  var upload_path = '/assets/uploads';
 
 module.exports = {
+  
 	upload_form: function(req, res) {
 		res.view('image_upload');
 	},

@@ -6,6 +6,10 @@ angular.module('pathagram')
         editor.getSession().setUseWrapMode true
         editor.getSession().setMode "ace/mode/javascript"
 
+        # instantiate ace EditSession for tabs
+        EditSession = ace.require("ace/edit_session").EditSession
+
+
         # files
         $scope.files = files
 
@@ -28,6 +32,8 @@ angular.module('pathagram')
         $scope.logs = [] # log entries
         $scope.showEdited = yes # whether to show the edited version of the image
         $scope.canvasReady = no # whether the edited image has shown up on the canvas
+        $scope.tabs = [] # active tabs
+        $scope.activeTab = 0 # the default active tab is the first file
 
         # load snippets
         $scope.snippets = [
@@ -59,7 +65,18 @@ angular.module('pathagram')
 
         # Loads in (but doesn't run) a file from the files service.
         $scope.loadFile = (file) ->
-            editor.setValue file.contents
+            if file not in $scope.tabs
+                $scope.tabs.push file
+                $scope.changeActiveTab($scope.tabs.length - 1)
+                editor.setValue file.contents
+            else
+                $scope.changeActiveTab($scope.tabs.indexOf file)
+
+        # Change the active tab
+        $scope.changeActiveTab = (index) ->
+            $scope.activeTab = index
+            editor.setValue $scope.tabs[index].contents
+            console.log 'switched tabs'
 
         # Runs the code inside the editing box
         $scope.runInput = () ->
@@ -180,4 +197,4 @@ angular.module('pathagram')
             if $scope.zoomer? then $scope.zoomer.getScale() else 1
 
         # last bit of init
-        $scope.loadSnippet "original"
+        $scope.loadFile $scope.files[0]

@@ -5,11 +5,17 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
+var extension_filetypes = {
+  'js': 'javascript',
+  'md': 'markdown'
+};
+
 module.exports = {
 
   identity: 'File',
 
   attributes: {
+
     filename: {
       type: 'string',
       required: true,
@@ -21,15 +27,9 @@ module.exports = {
       defaultsTo: ''
     },
 
-    filetype: {
-      type: 'string',
-      required: true,
-      defaultsTo: 'generic'
-    },
-
     owner: {
       model: 'User'
     }
-  }
+  },
 };
 
