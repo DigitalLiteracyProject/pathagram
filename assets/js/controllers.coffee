@@ -7,8 +7,7 @@ angular.module('pathagram')
         editor.getSession().setMode "ace/mode/javascript"
 
         # instantiate ace EditSession for tabs
-        EditSession = ace.require("ace/edit_session").EditSession
-
+        editSession = ace.require("ace/edit_session").EditSession
 
         # files
         $scope.files = files
@@ -67,16 +66,29 @@ angular.module('pathagram')
         $scope.loadFile = (file) ->
             if file not in $scope.tabs
                 $scope.tabs.push file
-                $scope.changeActiveTab($scope.tabs.length - 1)
-                editor.setValue file.contents
+                $scope.changeActiveTab $scope.tabs.length - 1
             else
-                $scope.changeActiveTab($scope.tabs.indexOf file)
+                $scope.changeActiveTab $scope.tabs.indexOf file
 
         # Change the active tab
         $scope.changeActiveTab = (index) ->
             $scope.activeTab = index
             editor.setValue $scope.tabs[index].contents
-            console.log 'switched tabs'
+
+        $scope.showTabCloseButton = -> $scope.tabs.length > 1
+
+        # Closes tab at given index and, if it's active,
+        # loads the right tab (if one exists), else the left tab (this is how browsers do it)
+        $scope.closeTab = (index) ->
+            $scope.tabs = _.without $scope.tabs, $scope.tabs[index]
+            if index == $scope.activeTab
+                numTabs = $scope.tabs.length
+                if index == numTabs
+                    # was the last one; load the new last one (what used to be to the left)
+                    $scope.changeActiveTab numTabs - 1
+                else
+                    # was in the middle; load the new one at that place (what used to be to the right)
+                    $scope.changeActiveTab index           
 
         # Runs the code inside the editing box
         $scope.runInput = () ->

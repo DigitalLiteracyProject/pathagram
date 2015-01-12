@@ -35,3 +35,10 @@
 #zoom-image {
     cursor: zoom-in;
 }
+
+
+/* Utility */
+.no-outline, .no-outline:hover, .no-outline:active, .no-outline:focus {
+    outline: 0 !important;
+    border: 0 !important;
+}

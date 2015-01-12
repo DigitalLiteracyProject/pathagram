@@ -3,12 +3,16 @@ angular.module('pathagram')
         files = [
             {
                 filename: "yo.js",
-                contents: "console.log('yo!');"
+                contents: "log('yo!');"
             },
             {
                 filename: "bro.js",
-                contents: "console.log('bro!');"
-            }
+                contents: "log('bro!');"
+            },
+            {
+                filename: "go.js",
+                contents: "log('go!');"
+            },
         ]
 
         return files

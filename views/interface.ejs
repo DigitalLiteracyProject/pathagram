@@ -69,7 +69,13 @@
 
                 <div id="editor-window">
                   <ul class="nav nav-tabs">
-                    <li role="presentation" ng-repeat="tab in tabs track by $index" ng-class="{'active': $index == activeTab}" ng-click="changeActiveTab($index)"><a href="#">{{tab.filename}}</a></li>
+                    <li role="presentation" ng-repeat="tab in tabs track by $index"
+                        ng-class="{'active': $index == activeTab}" ng-click="changeActiveTab($index)">
+                        <a href="#" class="no-outline">
+                            {{tab.filename}}
+                            <span ng-show="showTabCloseButton()" ng-click="closeTab($index)">&times;</span>
+                        </a>
+                    </li>
                   </ul>
                     <div id="editor"></div>
                     <button class="btn btn-primary btn-lg btn-block" id="run" autocomplete="off" ng-click="runInput()"
