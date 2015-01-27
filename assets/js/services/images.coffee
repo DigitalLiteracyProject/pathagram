@@ -1,5 +1,5 @@
 angular.module('pathagram')
-    .service 'images', () ->
+    .service 'images', ($http) ->
         images = [
             {
                 path: "images/harvard-yard.jpg",
@@ -18,5 +18,20 @@ angular.module('pathagram')
                 name: "fenway"
             }
         ]
+
+        $http({
+            url: "/user/images",
+            method: "GET"
+        }).success (data, status, headers, config) ->
+            console.log data
+            if data?.images?
+                for rawImage in data.images
+                    rawName = rawImage.imageName
+                    image = {
+                        path: rawImage.path
+                        name: rawName.substr 0, rawName.lastIndexOf '.'
+                    }
+
+                    images.push image
 
         return images

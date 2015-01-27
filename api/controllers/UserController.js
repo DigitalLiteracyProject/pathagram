@@ -80,6 +80,23 @@ module.exports = {
         res.view('dashboard', {user: user.toJSON()});
       }
     });
-  }
+},
+
+images: function(req, res){
+	if(!req.session || !req.session.user) {
+		// not logged in
+		res.json(null);
+	}
+	else {
+		User.findOneById(req.session.user.id).populate('images').exec(function(err, user){
+			if(err) {
+				req.flash('error', 'Error finding user information!');
+				res.send('Error!');
+			} else {
+				res.json({ images: user.images });
+			}
+		});
+	}
+}
 
 };
