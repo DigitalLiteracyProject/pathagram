@@ -1,4 +1,4 @@
-<h2>Welcome to the dashboard</h2>
+<h2><span class="fa fa-dashboard"></span> Your dashboard</h2>
 
 <h3>My Images</h3>
 <% if (user.images.length > 0) { %>
@@ -15,6 +15,12 @@
         <% }); %>
     </div>
 <% } else {%>
-  You don't have any images yet!
+    <div class="alert alert-info lead">
+        You don't have any images yet!
+    </div>
 <% } %>
-Upload more images <a href="/upload">here</a>.
+
+<a href="/upload" class="btn btn-primary">
+    <span class="fa fa-upload"></span>
+    Upload more images
+</a>
