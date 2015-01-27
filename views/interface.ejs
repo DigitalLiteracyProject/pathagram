@@ -131,21 +131,27 @@
                         </strong>
                         {{error.message}}
                     </div>
-                </div>
-                <br>
 
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <span class="fa fa-quote-left"></span>
-                            Log
-                        </h3>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <span class="fa fa-quote-left"></span>
+                                Log
+                            </h3>
+                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="log in logs track by $index">
+                                {{log}}
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="log in logs track by $index">
-                            {{log}}
-                        </li>
-                    </ul>
+                </div>
+                <div ng-hide="ran">
+                    <div class="alert alert-info lead">
+                        <span class="fa fa-play"></span>
+
+                        Hit Run to start editing images!
+                    </div>
                 </div>
             </div>
         </div>
