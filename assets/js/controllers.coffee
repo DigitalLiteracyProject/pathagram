@@ -9,8 +9,11 @@ angular.module('pathagram')
         # instantiate ace EditSession for tabs
         editSession = ace.require("ace/edit_session").EditSession
 
-        # files
-        $scope.files = files
+        # load up files
+        files.get (fileList) ->
+            console.log fileList
+            $scope.files = fileList
+            $scope.loadFile $scope.files[0]
 
         # load up images
         # init tripod by preparing the images it uses
@@ -208,6 +211,3 @@ angular.module('pathagram')
             $scope.zoomer.setScale scale
         $scope.getZoomScale = ->
             if $scope.zoomer? then $scope.zoomer.getScale() else 1
-
-        # last bit of init
-        $scope.loadFile $scope.files[0]
