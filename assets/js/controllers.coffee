@@ -12,17 +12,18 @@ angular.module('pathagram')
         # files
         $scope.files = files
 
-        # images
-        $scope.images = images
-
+        # load up images
         # init tripod by preparing the images it uses
         # we need to go up a level since files given to us are relative to /assets
         # but we're in the /js folder, which is a child of that
         # APPEND_TO_FILE_PATH = "../"
-        sources = {}
-        _.each $scope.images, (image) ->
-            sources[image.name] = image.path
-        Tripod.setSources sources
+        images.get (imageList) ->
+            console.log imageList
+            $scope.images = imageList
+            sources = {}
+            _.each $scope.images, (image) ->
+                sources[image.name] = image.path
+            Tripod.setSources sources
 
         # init scope
         $scope.ran = no # turns yes once code is run
@@ -88,7 +89,7 @@ angular.module('pathagram')
                     $scope.changeActiveTab numTabs - 1
                 else
                     # was in the middle; load the new one at that place (what used to be to the right)
-                    $scope.changeActiveTab index           
+                    $scope.changeActiveTab index
 
         # Runs the code inside the editing box
         $scope.runInput = () ->
