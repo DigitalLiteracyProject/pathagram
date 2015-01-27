@@ -97,6 +97,42 @@ images: function(req, res){
 			}
 		});
 	}
+},
+
+// Returns all the user's images
+images: function(req, res){
+	if(!req.session || !req.session.user) {
+		// not logged in
+		res.json(null);
+	}
+	else {
+		User.findOneById(req.session.user.id).populate('images').exec(function(err, user){
+			if(err) {
+				req.flash('error', 'Error finding user information!');
+				res.send('Error!');
+			} else {
+				res.json({ images: user.images });
+			}
+		});
+	}
+},
+
+// Returns all the user's files
+files: function(req, res){
+	if(!req.session || !req.session.user) {
+		// not logged in
+		res.json(null);
+	}
+	else {
+		User.findOneById(req.session.user.id).populate('files').exec(function(err, user){
+			if(err) {
+				req.flash('error', 'Error finding user information!');
+				res.send('Error!');
+			} else {
+				res.json({ files: user.files });
+			}
+		});
+	}
 }
 
 };
