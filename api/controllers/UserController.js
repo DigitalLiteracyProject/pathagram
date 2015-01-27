@@ -6,6 +6,7 @@
  */
 
 var bcrypt = require('bcrypt');
+var fileController = require('./FileController');
 
 module.exports = {
 
@@ -35,6 +36,7 @@ module.exports = {
         res.redirect('/signup');
       } else {
         req.flash('success', 'New User Created');
+
         res.redirect('login');
       }
     });
@@ -71,7 +73,8 @@ module.exports = {
   },
 
   dashboard: function(req, res){
-    User.findOneById(req.session.user.id).populate('images').exec(function(err, user){
+    User.findOneById(req.session.user.id).populate('images').populate('files').exec(function(err, user){
+		// load dashboard
       if(err) {
         req.flash('error', 'Error finding user information!');
         res.view('dashboard');
@@ -79,24 +82,12 @@ module.exports = {
         console.log(user.toJSON());
         res.view('dashboard', {user: user.toJSON()});
       }
-    });
-},
 
-images: function(req, res){
-	if(!req.session || !req.session.user) {
-		// not logged in
-		res.json(null);
-	}
-	else {
-		User.findOneById(req.session.user.id).populate('images').exec(function(err, user){
-			if(err) {
-				req.flash('error', 'Error finding user information!');
-				res.send('Error!');
-			} else {
-				res.json({ images: user.images });
-			}
-		});
-	}
+		// images?
+		if(!user.files || user.files.length == 0){
+			fileController.createSample(req, res);
+		}
+    });
 },
 
 // Returns all the user's images

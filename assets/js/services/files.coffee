@@ -4,17 +4,9 @@ angular.module('pathagram')
             get: (callback) ->
                 files = [
                     {
-                        filename: "yo.js",
-                        contents: "log('yo!');"
-                    },
-                    {
-                        filename: "bro.js",
-                        contents: "log('bro!');"
-                    },
-                    {
-                        filename: "go.js",
-                        contents: "log('go!');"
-                    },
+                        filename: "main.js",
+                        contents: "log('Hello Pathagram!');"
+                    }
                 ]
 
                 $http({
@@ -23,6 +15,7 @@ angular.module('pathagram')
                 }).success (data, status, headers, config) ->
                     console.log data
                     if data?.files?
+                        files = []
                         for rawFile in data.files
                             file = {
                                 filename: rawFile.filename,

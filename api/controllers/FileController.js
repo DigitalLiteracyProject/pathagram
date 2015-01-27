@@ -6,9 +6,8 @@
  */
 
 module.exports = {
-
     // loads in a sample list of files
-    init: function(req, res) {
+    createSample: function(req, res) {
         File.create({
             filename: "test.js",
             source: "console.log('test!');",

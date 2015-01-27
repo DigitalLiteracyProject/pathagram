@@ -2,7 +2,6 @@ angular.module('pathagram')
     .controller 'MainCtrl', ($scope, $http, files, images) ->
         # load up files
         files.get (fileList) ->
-            console.log fileList
             $scope.files = fileList
             $scope.loadFile $scope.files[0]
 
@@ -12,7 +11,6 @@ angular.module('pathagram')
         # but we're in the /js folder, which is a child of that
         # APPEND_TO_FILE_PATH = "../"
         images.get (imageList) ->
-            console.log imageList
             $scope.images = imageList
             sources = {}
             _.each $scope.images, (image) ->
@@ -208,7 +206,7 @@ angular.module('pathagram')
             $scope.zoomer.setScale scale
         $scope.getZoomScale = ->
             if $scope.zoomer? then $scope.zoomer.getScale() else 1
-            
+
         # ace editor
         editor = ace.edit "editor"
         editor.setTheme "ace/theme/xcode"
