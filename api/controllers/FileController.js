@@ -25,26 +25,37 @@ module.exports = {
     },
 
     // updates the model's (given by name) source
+    // specify filename, source
     save: function (req, res) {
-        if (req.session.user && req.body && req.body.filename && req.body.source) {
-            var filename = req.body.filename;
+        if (req.session.user) {
+            if (req.body && req.body.filename && req.body.source) {
+                var filename = req.body.filename;
 
-            File.findOne({
-                filename: filename,
-                owner: req.session.user.id
-            }).exec(function(err, file){
-                if(err) {
-                    res.send('Error!');
-                }
-                else {
-                    file.source = req.body.source;
-                    file.save();
-                    res.send('Saved ' + filename + '!');
-                }
-            });
+                File.findOne({
+                    filename: filename,
+                    owner: req.session.user.id
+                }).exec(function(err, file){
+                    if(err) {
+                        res.send('Error! Query was:');
+                        res.send(JSON.parse(req.body));
+                    }
+                    else if(!file) {
+                        // not found; fail
+                        res.send('File ' + filename + ' not found!');
+                    }
+                    else {
+                        file.source = req.body.source;
+                        file.save();
+                        res.send('Saved ' + filename + '!');
+                    }
+                });
+            }
+            else {
+                res.send('Bad query!');
+            }
         }
         else {
-            res.send('Bad query!');
+            res.send('Not logged in!');
         }
     }
 };

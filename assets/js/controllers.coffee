@@ -1,14 +1,5 @@
 angular.module('pathagram')
     .controller 'MainCtrl', ($scope, $http, files, images) ->
-        # render ace editor
-        editor = ace.edit "editor"
-        editor.setTheme "ace/theme/xcode"
-        editor.getSession().setUseWrapMode true
-        editor.getSession().setMode "ace/mode/javascript"
-
-        # instantiate ace EditSession for tabs
-        editSession = ace.require("ace/edit_session").EditSession
-
         # load up files
         files.get (fileList) ->
             console.log fileList
@@ -93,6 +84,12 @@ angular.module('pathagram')
                 else
                     # was in the middle; load the new one at that place (what used to be to the right)
                     $scope.changeActiveTab index
+
+        # Saves the active tab back to the server
+        $scope.saveActiveTab = () ->
+            currentFile = $scope.tabs[$scope.activeTab]
+            currentFile.contents = editor.getValue()
+            files.save currentFile
 
         # Runs the code inside the editing box
         $scope.runInput = () ->
@@ -211,3 +208,16 @@ angular.module('pathagram')
             $scope.zoomer.setScale scale
         $scope.getZoomScale = ->
             if $scope.zoomer? then $scope.zoomer.getScale() else 1
+            
+        # ace editor
+        editor = ace.edit "editor"
+        editor.setTheme "ace/theme/xcode"
+        editor.getSession().setUseWrapMode true
+        editor.getSession().setMode "ace/mode/javascript"
+
+        # save on change
+        editor.on 'change', _.throttle $scope.saveActiveTab, 1000
+
+
+        # instantiate ace EditSession for tabs
+        editSession = ace.require("ace/edit_session").EditSession

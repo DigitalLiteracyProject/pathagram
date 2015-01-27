@@ -32,4 +32,15 @@ angular.module('pathagram')
                             files.push file
 
                     callback files
+            ,
+            save: (file) ->
+                $http({
+                    url: "/file/save",
+                    method: "POST",
+                    data: {
+                        filename: file.filename,
+                        source: file.contents
+                    }
+                }).success (data, status, headers, config) ->
+                    console.log data
         }
