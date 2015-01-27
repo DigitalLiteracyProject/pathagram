@@ -50,10 +50,10 @@ class TZoom
 
         # dest radius = @scale * source radius
         destRadii =
-            top: Math.round(sourceRadii.top * @scale),
-            left: Math.round(sourceRadii.left * @scale),
-            bottom: Math.round(sourceRadii.bottom * @scale),
-            right: Math.round(sourceRadii.right * @scale)
+            top: (sourceRadii.top * @scale),
+            left: (sourceRadii.left * @scale),
+            bottom: (sourceRadii.bottom * @scale),
+            right: (sourceRadii.right * @scale)
 
         # now to convert both to (x, y, width, height) where (x,y) are top left corner
         # (drawImage() needs this)
@@ -63,8 +63,8 @@ class TZoom
             width: sourceRadii.left + sourceRadii.right,
             height: sourceRadii.top + sourceRadii.bottom
 
-        destCenterX = Math.round @width / 2
-        destCenterY = Math.round @height / 2
+        destCenterX = @width / 2
+        destCenterY = @height / 2
         destBox =
             x: destCenterX - destRadii.left,
             y: destCenterY - destRadii.top,
@@ -78,7 +78,7 @@ class TZoom
         @destContext.clearRect 0, 0, @width, @height
 
         # now copy over the zoomed image information
-        @canvasPixelatedResize @sourceContext, @destContext,
+        info = [
             sourceBox.x,
             sourceBox.y,
             sourceBox.width,
@@ -87,6 +87,9 @@ class TZoom
             destBox.y,
             destBox.width,
             destBox.height
+        ]
+        roundedInfo = (Math.round item for item in info)
+        @canvasPixelatedResize @sourceContext, @destContext, roundedInfo...
 
     # Position
 
