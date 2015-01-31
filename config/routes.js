@@ -23,7 +23,7 @@
 module.exports.routes = {
 
   '/': {
-    view: 'index'
+    view: 'interface'
   },
 
   '/sandbox': {
@@ -33,7 +33,7 @@ module.exports.routes = {
   '/interface': {
     view: 'interface'
   },
-    
+
   '/help': {
     view: 'help'
   },

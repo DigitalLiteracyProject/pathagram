@@ -5,7 +5,7 @@ angular.module('pathagram')
                 files = [
                     {
                         filename: "main.js",
-                        contents: "log('Hello Pathagram!');"
+                        contents: "var image = new TImage('harvard');\nlog('Hi from Pathagram!');\nimage.refresh();"
                     }
                 ]
 
