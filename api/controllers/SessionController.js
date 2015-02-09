@@ -19,7 +19,7 @@ module.exports = {
             var fileObjects = _.map(filenames, function(filename){
                 return {
                     filename: filename,
-                    source: "   ",
+                    source: " ",
                     owner: req.session.user.id
                 }
             });
@@ -120,7 +120,7 @@ module.exports = {
                             res.view('interface', {sessionId: createdObject.id});
                           }
                         });
-                    }                 
+                    }
                 });
               }
             });

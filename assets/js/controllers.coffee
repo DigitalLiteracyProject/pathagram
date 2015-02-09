@@ -1,5 +1,5 @@
 angular.module('pathagram')
-    .controller 'MainCtrl', ($scope, $http, files, images) ->
+    .controller 'MainCtrl', ($scope, $http, files, images, session) ->
         # init scope
         $scope.ran = no # turns yes once code is run
         $scope.success = no # yes if the code worked
@@ -12,6 +12,11 @@ angular.module('pathagram')
 
         # if we're working in a session (lesson), interface may look different
         $scope.inSession = window.sessionId?
+        $scope.session = null
+        # grab information about session
+        if $scope.inSession
+            session.get (sessionInfo) ->
+                $scope.session = sessionInfo
 
         # load snippets
         $scope.snippets = [

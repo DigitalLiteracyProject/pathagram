@@ -26,6 +26,16 @@
             </span>
         </div>
 
+        <div ng-show="inSession">
+            <h3 class="text-center">
+                {{session.name}}
+                <span class="small">
+                    {{session.description}}
+                </span>
+            </h3>
+            <hr>
+        </div>
+
         <div class="row" id="main-container">
             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12" id="file-sidebar">
                 <div class="panel panel-default">
