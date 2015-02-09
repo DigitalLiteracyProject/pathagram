@@ -1,4 +1,4 @@
-<% if (sessionId){ %>
+<% if (typeof sessionId !== "undefined" && sessionId !== null){ %>
 <script>
     window.sessionId = <%- JSON.stringify(sessionId) %>
 </script>
