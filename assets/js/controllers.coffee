@@ -1,22 +1,5 @@
 angular.module('pathagram')
     .controller 'MainCtrl', ($scope, $http, files, images) ->
-        # load up files
-        files.get (fileList) ->
-            $scope.files = fileList
-            $scope.loadFile $scope.files[0]
-
-        # load up images
-        # init tripod by preparing the images it uses
-        # we need to go up a level since files given to us are relative to /assets
-        # but we're in the /js folder, which is a child of that
-        # APPEND_TO_FILE_PATH = "../"
-        images.get (imageList) ->
-            $scope.images = imageList
-            sources = {}
-            _.each $scope.images, (image) ->
-                sources[image.name] = image.path
-            Tripod.setSources sources
-
         # init scope
         $scope.ran = no # turns yes once code is run
         $scope.success = no # yes if the code worked
@@ -216,6 +199,22 @@ angular.module('pathagram')
         # save on change
         editor.on 'change', _.throttle $scope.saveActiveTab, 1000
 
-
         # instantiate ace EditSession for tabs
         editSession = ace.require("ace/edit_session").EditSession
+
+        # load up files
+        files.get (fileList) ->
+            $scope.files = fileList
+            $scope.loadFile $scope.files[0]
+
+        # load up images
+        # init tripod by preparing the images it uses
+        # we need to go up a level since files given to us are relative to /assets
+        # but we're in the /js folder, which is a child of that
+        # APPEND_TO_FILE_PATH = "../"
+        images.get (imageList) ->
+            $scope.images = imageList
+            sources = {}
+            _.each $scope.images, (image) ->
+                sources[image.name] = image.path
+            Tripod.setSources sources
