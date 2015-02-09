@@ -58,11 +58,12 @@ module.exports = {
   sessionInterface: function(req, res){
     // If the user is an admin, display the session no matter what
     if(req.session.user.type == 'admin'){
-      Session.find(req.param('id')).populate('files').exec(function(err, sessionData){
+      Session.findOne(req.param('id')).populate('files').exec(function(err, sessionData){
         if(err){
           res.send('Error finding session');
         } else {
-          res.view('interface', {sessionData: sessionData});
+            console.log(sessionData);
+          res.view('interface', {sessionId: sessionData.id});
         }
       });
     } else {
@@ -78,15 +79,16 @@ module.exports = {
               if(err){
                 res.send('Error finding session');
               } else if(data) {
-                res.view('interface', {sessionData: data});
+                res.view('interface', {sessionId: data.id});
               } else {
-                // make a new user instance
+                // make a new user instance of this (a fork)
+                // TODO fork the files too (clone them)
                 newObjectData = {title: sessionData.title, details: sessionData.details, files: sessionData.files, master: false, reference: sessionData.id, owner: req.session.user.id};
                 Session.create(newObjectData).exec(function(req, res, createdObject){
                   if(err){
                     res.send('Error making new session');
                   } else {
-                    res.view('interface', {sessionData: createdObject});
+                    res.view('interface', {sessionId: createdObject.id});
                   }
                 });
               }

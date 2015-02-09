@@ -78,7 +78,7 @@ module.exports.routes = {
     action: 'upload'
   },
 
-  'GET /sessions/:id': {
+  'GET /sessions': {
     controller: 'SessionController',
     action: 'sessionInterface'
   },

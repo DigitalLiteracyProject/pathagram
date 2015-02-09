@@ -7,7 +7,7 @@
         <% sessions.forEach(function(session) {%>
             <div class="col-xs-3 col-xs-6">
                 <ul>
-                    <li><a href="/sessions/<%= session.id %>"><%= session.title %></a></li>
+                    <li><a href="/sessions?id=<%= session.id %>"><%= session.title %></a></li>
                 </ul>
             </div>
         <% }); %>

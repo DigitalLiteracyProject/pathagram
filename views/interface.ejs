@@ -1,6 +1,6 @@
-<% if (locals.sessionData){ %>
+<% if (sessionId){ %>
 <script>
-    window.sessionData = <%- JSON.stringify(sessionData) %>
+    window.sessionId = <%- JSON.stringify(sessionId) %>
 </script>
 <% } %>
 
