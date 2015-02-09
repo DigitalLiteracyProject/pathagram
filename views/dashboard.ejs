@@ -1,6 +1,24 @@
 <h2><span class="fa fa-dashboard"></span> Dashboard</h2>
 <hr>
 
+<h3>My Sessions</h3>
+<% if (user.sessions.length > 0) { %>
+    <div class="row">
+        <% user.sessions.forEach(function(session) {%>
+            <div class="col-xs-3 col-xs-6">
+                <ul>
+                    <li><%= session.title %></li>
+                </ul>
+            </div>
+        <% }); %>
+    </div>
+<% } else {%>
+    <div class="alert alert-info lead">
+        You don't have any sessions yet!
+    </div>
+<% } %>
+(Or, <a href="/interface">visit the sandbox</a> to play!)
+
 <h3>My Images</h3>
 <% if (user.images.length > 0) { %>
     <div class="row">

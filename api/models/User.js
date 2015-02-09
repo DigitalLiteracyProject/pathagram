@@ -29,8 +29,20 @@ module.exports = {
       defaultsTo: []
     },
 
+    type: {
+      type: 'string',
+      required: true,
+      defaultsTo: 'student'
+    },
+
     images: {
       collection: 'Image',
+      via: 'owner',
+      defaultsTo: []
+    },
+
+    sessions: {
+      collection: 'Session',
       via: 'owner',
       defaultsTo: []
     },

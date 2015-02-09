@@ -73,7 +73,7 @@ module.exports = {
   },
 
   dashboard: function(req, res){
-    User.findOneById(req.session.user.id).populate('images').populate('files').exec(function(err, user){
+    User.findOneById(req.session.user.id).populate('images').populate('files').populate('sessions').exec(function(err, user){
 		// load dashboard
       if(err) {
         req.flash('error', 'Error finding user information!');
