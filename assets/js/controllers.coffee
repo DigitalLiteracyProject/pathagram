@@ -10,6 +10,9 @@ angular.module('pathagram')
         $scope.tabs = [] # active tabs
         $scope.activeTab = 0 # the default active tab is the first file
 
+        # if we're working in a session (lesson), interface may look different
+        $scope.inSession = window.sessionId?
+
         # load snippets
         $scope.snippets = [
             "Original",
