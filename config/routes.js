@@ -83,10 +83,14 @@ module.exports.routes = {
     action: 'sessionInterface'
   },
 
-  'PUT /sessions/master': {
+  'POST /sessions/new': {
     controller: 'SessionController',
     action: 'createMaster'
-  }
+},
+
+'/newsession': {
+    view: 'sessionForm'
+}
 
   /***************************************************************************
   *                                                                          *

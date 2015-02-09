@@ -13,6 +13,9 @@ module.exports = {
             // Required: title, details, filenames
 
             // first create files with the specified names
+            var filenames = _.each(req.param('filenames').split('\n'), function(line){
+                return line.trim();
+            });
             var fileObjects = _.map(filenames, function(filename){
                 return {
                     filename: filename,
