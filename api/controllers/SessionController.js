@@ -69,22 +69,39 @@ module.exports = {
     } else {
       // if the user is not an admin...
       // check if the session is a master, if it is, look for the appropriate user instance
-      Session.find(req.param('id')).exec(function(err, sessionData){
+      Session.findOne(req.param('id')).exec(function(err, sessionData){
         if(err){
           res.send('Error finding session');
         } else {
           if(sessionData.master == true){
-            // find the user's version(s) of this
-            Session.find({master: false, owner: req.session.user.id, reference: req.param('id')}).exec(function(err, data){
+            var masterSessionId = req.param('id');
+
+            // find the user's version of this
+            Session.findOne({master: false, owner: req.session.user.id, reference: masterSessionId}).exec(function(err, data){
               if(err){
                 res.send('Error finding session');
               } else if(data) {
+                  console.log('Loading fork ' + data.id);
                 res.view('interface', {sessionId: data.id});
               } else {
                 // make a new user instance of this (a fork)
-                // TODO fork the files too (clone them)
-                newObjectData = {title: sessionData.title, details: sessionData.details, files: sessionData.files, master: false, reference: sessionData.id, owner: req.session.user.id};
-                Session.create(newObjectData).exec(function(req, res, createdObject){
+                console.log('new fork');
+
+                // change file ownership
+                var files = sessionData.files;
+                _.each(files, function(file){
+                    file.owner = req.session.user.id;
+                });
+
+                var newObjectData = {
+                    title: sessionData.title,
+                    details: sessionData.details,
+                    files: files,
+                    master: false,
+                    reference: masterSessionId,
+                    owner: req.session.user.id
+                };
+                Session.create(newObjectData).exec(function(err, createdObject){
                   if(err){
                     res.send('Error making new session');
                   } else {
