@@ -35,7 +35,20 @@ module.exports = {
         req.flash('error', 'Error creating User');
         res.redirect('/signup');
       } else {
-        req.flash('success', 'New User Created');
+		// TODO make this more secure?
+		// if username == "admin", make them an admin
+		if (user.username == "admin") {
+			User.update({ username: user.username }, { type: "admin" }).exec(function(err, updated){
+				if (err) {
+					res.send("Error creating admin!");
+				}
+				else {
+					console.log(updated[0].username + " is now admin");
+				}
+			});
+		}
+
+        req.flash('success', 'New user created!');
 
         res.redirect('login');
       }
@@ -82,6 +95,11 @@ module.exports = {
           res.view('dashboard', {user: user.toJSON(), sessions: sessions});
         });
       }
+
+		// load in samples if no files
+		if (!user.files || user.files.length == 0) {
+			fileController.createSample(req, res);
+		}
     });
 },
 

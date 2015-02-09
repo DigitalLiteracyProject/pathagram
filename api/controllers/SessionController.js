@@ -24,6 +24,7 @@ module.exports = {
           res.send('Error finding session');
         } else {
           if(sessionData.master == true){
+            // find the user's version(s) of this
             Session.find({master: false, owner: req.session.user.id, reference: req.param('id')}).exec(function(err, data){
               if(err){
                 res.send('Error finding session');
