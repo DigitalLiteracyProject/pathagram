@@ -197,7 +197,7 @@ angular.module('pathagram')
         editor.getSession().setMode "ace/mode/javascript"
 
         # save on change
-        editor.on 'change', _.throttle $scope.saveActiveTab, 1000
+        editor.on 'change', _.throttle $scope.saveActiveTab, 5000
 
         # instantiate ace EditSession for tabs
         editSession = ace.require("ace/edit_session").EditSession

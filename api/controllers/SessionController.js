@@ -69,7 +69,7 @@ module.exports = {
     } else {
       // if the user is not an admin...
       // check if the session is a master, if it is, look for the appropriate user instance
-      Session.findOne(req.param('id')).exec(function(err, sessionData){
+      Session.findOne(req.param('id')).populate('files').exec(function(err, sessionData){
         if(err){
           res.send('Error finding session');
         } else {
@@ -77,7 +77,7 @@ module.exports = {
             var masterSessionId = req.param('id');
 
             // find the user's version of this
-            Session.findOne({master: false, owner: req.session.user.id, reference: masterSessionId}).exec(function(err, data){
+            Session.findOne({master: false, owner: req.session.user.id, reference: masterSessionId}).populate('files').exec(function(err, data){
               if(err){
                 res.send('Error finding session');
               } else if(data) {
@@ -86,27 +86,41 @@ module.exports = {
               } else {
                 // make a new user instance of this (a fork)
                 console.log('new fork');
+                console.log(sessionData);
 
-                // change file ownership
+                // build new files
                 var files = sessionData.files;
-                _.each(files, function(file){
-                    file.owner = req.session.user.id;
+                files = _.map(files, function(file){
+                    return {
+                        filename: file.filename,
+                        source: file.source,
+                        owner: req.session.user.id
+                    }
                 });
 
-                var newObjectData = {
-                    title: sessionData.title,
-                    details: sessionData.details,
-                    files: files,
-                    master: false,
-                    reference: masterSessionId,
-                    owner: req.session.user.id
-                };
-                Session.create(newObjectData).exec(function(err, createdObject){
-                  if(err){
-                    res.send('Error making new session');
-                  } else {
-                    res.view('interface', {sessionId: createdObject.id});
-                  }
+                File.create(files).exec(function(err, newFiles){
+                    if(err){
+                        res.send('Error copying files!');
+                    }
+                    else {
+                        console.log(files);
+
+                        var newObjectData = {
+                            title: sessionData.title,
+                            details: sessionData.details,
+                            files: newFiles,
+                            master: false,
+                            reference: masterSessionId,
+                            owner: req.session.user.id
+                        };
+                        Session.create(newObjectData).exec(function(err, createdObject){
+                          if(err){
+                            res.send('Error making new session');
+                          } else {
+                            res.view('interface', {sessionId: createdObject.id});
+                          }
+                        });
+                    }                 
                 });
               }
             });
