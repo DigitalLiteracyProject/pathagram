@@ -35,7 +35,7 @@ angular.module('pathagram')
             "Superhero",
             "Meme",
             "Snapchat",
-            "Fire and Sky"
+            # "Fire and Sky"
         ]
 
         # Loads a sample text snippet, puts it in the editor, and executes it.
