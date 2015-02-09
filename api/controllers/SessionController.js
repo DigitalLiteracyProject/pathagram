@@ -35,12 +35,18 @@ module.exports = {
                     Session.create({
                         title: req.param('title'),
                         details: req.param('details'),
-                        files: fileArray,
+                        files: fileObjects,
                         master: true,
                         user: req.session.user.id
+                    }).exec(function(err, session){
+                        if(err) {
+                            res.send("Error creating session! " + err);
+                        }
+                        else {
+                            console.log(session);
+                            res.redirect('dashboard');
+                        }
                     });
-
-                    res.redirect('dashboard');
                 }
             });
         }
