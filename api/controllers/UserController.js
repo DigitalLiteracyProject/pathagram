@@ -96,10 +96,12 @@ module.exports = {
         });
       }
 
+		/*
 		// load in samples if no files
 		if (!user.files || user.files.length == 0) {
 			fileController.createSample(req, res);
 		}
+		*/
     });
 },
 

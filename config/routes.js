@@ -81,6 +81,11 @@ module.exports.routes = {
   'GET /sessions/:id': {
     controller: 'SessionController',
     action: 'sessionInterface'
+  },
+
+  'PUT /sessions/master': {
+    controller: 'SessionController',
+    action: 'createMaster'
   }
 
   /***************************************************************************
