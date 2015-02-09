@@ -6,9 +6,19 @@
     <div class="row">
         <% sessions.forEach(function(session) {%>
             <div class="col-xs-3 col-xs-6">
-                <ul>
-                    <li><a href="/sessions?id=<%= session.id %>"><%= session.title %></a></li>
-                </ul>
+                <div class="panel panel-default">
+
+                    <a href="/sessions?id=<%= session.id %>">
+                        <div class="panel-body">
+                            <span class="lead">
+                                <%= session.title %>
+                            </span>
+                            <span class="text-muted">
+                                <%= session.details %>
+                            </span>
+                        </div>
+                    </a>
+                </div>
             </div>
         <% }); %>
     </div>
@@ -19,12 +29,12 @@
 <% } %>
 
 <% if (user.type == "admin") { %>
-    <a href="/newsession" class="btn btn-default">
+    <a href="/newsession" class="btn btn-primary">
         <span class="fa fa-plus"></span> New session
     </a>
 <% } %>
 
-<p>Or, <a href="/interface">visit the sandbox</a> to play!</p>
+<p class="lead">Or, <a href="/interface">visit the sandbox</a> to play!</p>
 
 <h3>My Images</h3>
 <% if (user.images.length > 0) { %>
