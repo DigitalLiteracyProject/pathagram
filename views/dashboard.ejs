@@ -19,10 +19,12 @@
 <% } %>
 
 <% if (user.type == "admin") { %>
-    
+    <a href="/newsession" class="btn btn-default">
+        <span class="fa fa-plus"></span> New session
+    </a>
 <% } %>
 
-(Or, <a href="/interface">visit the sandbox</a> to play!)
+<p>Or, <a href="/interface">visit the sandbox</a> to play!</p>
 
 <h3>My Images</h3>
 <% if (user.images.length > 0) { %>
