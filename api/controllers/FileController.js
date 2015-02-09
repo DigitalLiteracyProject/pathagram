@@ -23,15 +23,15 @@ module.exports = {
         });
     },
 
-    // updates the model's (given by name) source
+    // updates the model's (given by id) source
     // specify filename, source
     save: function (req, res) {
         if (req.session.user) {
-            if (req.body && req.body.filename && req.body.source) {
-                var filename = req.body.filename;
+            if (req.body && req.body.id && req.body.source) {
+                var id = req.body.id;
 
                 File.findOne({
-                    filename: filename,
+                    id: id,
                     owner: req.session.user.id
                 }).exec(function(err, file){
                     if(err) {
@@ -40,12 +40,12 @@ module.exports = {
                     }
                     else if(!file) {
                         // not found; fail
-                        res.send('File ' + filename + ' not found!');
+                        res.send('File #' + id + ' not found!');
                     }
                     else {
                         file.source = req.body.source;
                         file.save();
-                        res.send('Saved ' + filename + '!');
+                        res.send('Saved file #' + id + '!');
                     }
                 });
             }

@@ -10,19 +10,18 @@ angular.module('pathagram')
                 ]
 
                 $http({
-                    url: "/user/files",
-                    method: "GET"
+                    url: "/session/1/files",
+                    method: "GET",
+                    responseType: "json"
                 }).success (data, status, headers, config) ->
                     console.log data
-                    if data?.files?
-                        files = []
-                        for rawFile in data.files
-                            file = {
-                                filename: rawFile.filename,
-                                contents: rawFile.source
-                            }
-
-                            files.push file
+                    # each element of data is a file
+                    files = _.map data, (rawFile) ->
+                        {
+                            filename: rawFile.filename,
+                            contents: rawFile.source,
+                            id: rawFile.id
+                        }
 
                     callback files
             ,
@@ -31,7 +30,7 @@ angular.module('pathagram')
                     url: "/file/save",
                     method: "POST",
                     data: {
-                        filename: file.filename,
+                        id: file.id
                         source: file.contents
                     }
                 }).success (data, status, headers, config) ->

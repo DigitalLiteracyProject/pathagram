@@ -139,6 +139,28 @@ files: function(req, res){
 			}
 		});
 	}
+},
+
+// Given a sessionId, returns the full information about that session
+// (provided the user owns it)
+session: function(req, res){
+	if(!req.session || !req.session.user) {
+		// not logged in
+		res.json(null);
+	}
+	else {
+		console.log(req.param('sessionId'));		
+		Session.findOneById(req.param('sessionId')).populate('files').exec(function(err, session){
+			if(err) {
+				req.flash('error', 'Error finding session information!');
+				res.send('Error!');
+			} else if (session.owner != req.session.user.id) {
+				res.send("You don't own this session!");
+			} else {
+				res.json({ session: session });
+			}
+		});
+	}
 }
 
 };
