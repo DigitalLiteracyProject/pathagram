@@ -6,6 +6,7 @@
  */
 
 module.exports = {
+    /*
     // loads in a sample list of files
     createSample: function(req, res) {
         File.create({
@@ -22,6 +23,7 @@ module.exports = {
             }
         });
     },
+    */
 
     // updates the model's (given by name) source
     // specify filename, source

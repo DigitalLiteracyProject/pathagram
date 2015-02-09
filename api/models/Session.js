@@ -29,7 +29,7 @@ module.exports = {
 
     reference: {
       model: 'Session'
-    }, 
+    },
 
     master: {
       type: 'boolean',

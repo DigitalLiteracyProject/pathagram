@@ -82,11 +82,6 @@ module.exports = {
           res.view('dashboard', {user: user.toJSON(), sessions: sessions});
         });
       }
-
-  		// if there are no files, load some samples
-  		if(!user.files || user.files.length == 0){
-  			fileController.createSample(req, res);
-  		}
     });
 },
 
