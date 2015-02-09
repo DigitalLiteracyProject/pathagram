@@ -2,12 +2,12 @@
 <hr>
 
 <h3>My Sessions</h3>
-<% if (user.sessions.length > 0) { %>
+<% if (sessions.length > 0) { %>
     <div class="row">
-        <% user.sessions.forEach(function(session) {%>
+        <% sessions.forEach(function(session) {%>
             <div class="col-xs-3 col-xs-6">
                 <ul>
-                    <li><%= session.title %></li>
+                    <li><a href="/sessions/<%= session.id %>"><%= session.title %></a></li>
                 </ul>
             </div>
         <% }); %>

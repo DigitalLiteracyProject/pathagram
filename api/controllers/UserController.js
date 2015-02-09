@@ -43,7 +43,6 @@ module.exports = {
   },
 
   authenticate: function(req, res) {
-    console.log(req.body);
     User.findOneByUsername(req.body.username).exec(function(err, user) {
       if(err || !user) {
         console.log('Error finding user during login');
@@ -79,14 +78,15 @@ module.exports = {
         req.flash('error', 'Error finding user information!');
         res.view('dashboard');
       } else {
-        console.log(user.toJSON());
-        res.view('dashboard', {user: user.toJSON()});
+        Session.find({master: true}).exec(function(err, sessions){
+          res.view('dashboard', {user: user.toJSON(), sessions: sessions});
+        });
       }
 
-		// if there are no files, load some samples
-		if(!user.files || user.files.length == 0){
-			fileController.createSample(req, res);
-		}
+  		// if there are no files, load some samples
+  		if(!user.files || user.files.length == 0){
+  			fileController.createSample(req, res);
+  		}
     });
 },
 

@@ -30,6 +30,7 @@ module.exports = {
     owner: {
       model: 'User'
     }
+    
   },
 };
 

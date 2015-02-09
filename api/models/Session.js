@@ -27,14 +27,17 @@ module.exports = {
       defaultsTo: []
     },
 
-    owner: {
-      model: 'User',
+    reference: {
+      model: 'Session'
+    }, 
+
+    master: {
+      type: 'boolean',
       required: true
     },
 
-    creator: {
-      model: 'User',
-      required: true
+    owner: {
+      model: 'User'
     }
 
   },

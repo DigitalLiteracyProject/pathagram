@@ -76,6 +76,11 @@ module.exports.routes = {
   'POST /upload': {
     controller: 'ImageController',
     action: 'upload'
+  },
+
+  'GET /sessions/:id': {
+    controller: 'SessionController',
+    action: 'sessionInterface'
   }
 
   /***************************************************************************

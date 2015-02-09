@@ -1,5 +1,7 @@
-<% if (req.session.user){ %>
-
+<% if (sessionData){ %>
+<script>
+var sessionData = <%- JSON.stringify(sessionData) %>
+</script>
 <% } %>
 
 <div ng-app="pathagram">
